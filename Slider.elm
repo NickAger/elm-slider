@@ -106,28 +106,22 @@ mouseDownPosition =
 mouseInfoSignal : Signal MouseInfo
 mouseInfoSignal =
   let
-    toMouseInfoWithIsDown position mouseDownPosition isDown =
+    toMouseInfo position mouseDownPosition =
     { position = toPosition position
       , downPosition = mouseDownPosition
-      , isDown = isDown
      }
 
-    toMouseInfo fullMouseInfo =
-      { position = fullMouseInfo.position
-      , downPosition = fullMouseInfo.downPosition
-      }
-
-    zeroMouseInfoWithIsDown =
+    zeroMouseInfo =
       {
         position = zeroPosition
       , downPosition = zeroPosition
-      , isDown = False
       }
-    onlyDown = (\mouseInfo -> mouseInfo.isDown == True)
+    onlyDown = (\(isDown, _) -> isDown == True)
   in
-    Signal.map3 toMouseInfoWithIsDown Mouse.position mouseDownPosition Mouse.isDown
-      |> Signal.filter onlyDown zeroMouseInfoWithIsDown
-      |> Signal.map toMouseInfo
+    Signal.map2 toMouseInfo Mouse.position mouseDownPosition
+      |> Signal.map2 (,) Mouse.isDown
+      |> Signal.filter onlyDown (False, zeroMouseInfo)
+      |> Signal.map (\(_, mouseInfo) -> mouseInfo) -- no longer need isDown, only necessary for filter
 
 modelSignal : Signal Model
 modelSignal =

@@ -10301,15 +10301,21 @@ Elm.Slider.make = function (_elm) {
       return A2($Signal.map,toPosition,A2($Signal.sampleOn,mouseDown,$Mouse.position));
    }();
    var mouseInfoSignal = function () {
-      var onlyDown = function (mouseInfo) {    return _U.eq(mouseInfo.isDown,true);};
-      var zeroMouseInfoWithIsDown = {position: zeroPosition,downPosition: zeroPosition,isDown: false};
-      var toMouseInfo = function (fullMouseInfo) {    return {position: fullMouseInfo.position,downPosition: fullMouseInfo.downPosition};};
-      var toMouseInfoWithIsDown = F3(function (position,mouseDownPosition,isDown) {
-         return {position: toPosition(position),downPosition: mouseDownPosition,isDown: isDown};
-      });
+      var onlyDown = function (_p2) {    var _p3 = _p2;return _U.eq(_p3._0,true);};
+      var zeroMouseInfo = {position: zeroPosition,downPosition: zeroPosition};
+      var toMouseInfo = F2(function (position,mouseDownPosition) {    return {position: toPosition(position),downPosition: mouseDownPosition};});
       return A2($Signal.map,
-      toMouseInfo,
-      A3($Signal.filter,onlyDown,zeroMouseInfoWithIsDown,A4($Signal.map3,toMouseInfoWithIsDown,$Mouse.position,mouseDownPosition,$Mouse.isDown)));
+      function (_p4) {
+         var _p5 = _p4;
+         return _p5._1;
+      },
+      A3($Signal.filter,
+      onlyDown,
+      {ctor: "_Tuple2",_0: false,_1: zeroMouseInfo},
+      A3($Signal.map2,
+      F2(function (v0,v1) {    return {ctor: "_Tuple2",_0: v0,_1: v1};}),
+      $Mouse.isDown,
+      A3($Signal.map2,toMouseInfo,$Mouse.position,mouseDownPosition))));
    }();
    var MouseInfo = F2(function (a,b) {    return {position: a,downPosition: b};});
    var Position = F2(function (a,b) {    return {x: a,y: b};});

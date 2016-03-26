@@ -1,69 +1,87 @@
 module Slider where
 
 import Html exposing (..)
-import Html.Events exposing (..)
-import Html.Attributes exposing (id, type', for, value, class)
-import StartApp
+import Html.Attributes exposing (class, style)
+import Mouse
+import Signal exposing (sampleOn)
 
 --
 
 type alias Model =
   {
-    position : Position
-  , value : Int
+    topLeft : Position
+  , height : Int
+  , percentValue : Int
   }
 
-view address model =
-  div [ class "slider-track" ]
+view :  Model -> Html
+view  model =
+  div
     [
-      div [ class "slider-thumb" ] []
+      class "slider-track"
+    , style [("height", toString model.height ++ "px")]
     ]
-
+    [
+      div
+        [
+          class "slider-thumb"
+        , style [("bottom", toString model.percentValue ++ "%")]
+        ]
+        []
+    ]
 
 -- UPDATE
 
-update : Event -> Model -> Model
-update event model =
-  case event of
-    MouseEvent mouseInfo ->
-      updateMouse mouseInfo model
-    ModelEvent action ->
-      updateModel action model
+mouseDownWithinSlider : MouseInfo -> Model -> Bool
+mouseDownWithinSlider mouseInfo model =
+  let
+    mx = mouseInfo.downPosition.x
+    x = model.topLeft.x
+    my = mouseInfo.downPosition.y
+    y = model.topLeft.y
+    height = model.height
+  in
+   (mx > x - 10 && mx < x + 10) && (my >= y && my <= y + height)
 
+barPercent : MouseInfo -> Model -> Int
+barPercent mouseInfo model =
+    let
+      posY = toFloat mouseInfo.position.y
+      y = toFloat model.topLeft.y
+      height = toFloat model.height
+      barPercent =  round (100 - ((posY - y) / (height / 100)))
+    in
+      (max 0 (min 100 barPercent))
 
-updateMouse : MouseInfo Model -> Model
-updateMouse mouseInfo model =
-  if model.mouseCaptured then
-
+update : MouseInfo -> Model -> Model
+update mouseInfo model =
+  if mouseInfo.isDown && (mouseDownWithinSlider mouseInfo model) then
+    { model | percentValue =  (barPercent mouseInfo model)}
   else
+    model
 
-  model
-
-updateModel : Action -> Model -> Model
-updateModel action model =
-  case action of
-    NoOp ->
-      model
-    MouseDownOnThumb ->
-      { model | mouseCaptured = True }
-
+--
+initialModel : Model
 initialModel =
-  { position = { x = 0, y = 0 }
-  , value = 50
+  { topLeft = { x = 8, y = 8 }
+  , height = 200
+  , percentValue = 50
   }
 
 -- SIGNALS
 
-type alias Position = {
-  x : Int
-, y : Int
-}
+type alias Position =
+  {
+    x : Int
+  , y : Int
+  }
 
-type alias MouseInfo = {
-  position : Position,
-  downPosition : Position,
-  isDown : Bool
-}
+type alias MouseInfo =
+  {
+    position : Position
+  , downPosition : Position
+  , isDown : Bool
+  }
 
 toPosition : (Int, Int) -> Position
 toPosition (x, y) = { x = x, y = y }
@@ -84,35 +102,19 @@ mouseInfoSignal : Signal MouseInfo
 mouseInfoSignal =
   let
     toMouseInfo position mouseDownPosition isDown =
-      { position = toPosition position
+    { position = toPosition position
       , downPosition = mouseDownPosition
       , isDown = isDown
      }
   in
     Signal.map3 toMouseInfo Mouse.position mouseDownPosition Mouse.isDown
 
-
-inbox : Signal.Mailbox Action
-inbox =
-  Signal.mailbox NoOp
-
-actions : Signal Action
-actions =
-  inbox.signal
-
-type Event = MouseEvent MouseInfo | ModelEvent Action
-
-model : Signal Event
-model =
-  let
-    mergedSignals = Signal.merge
-      (map ModelEvent actions)
-      (map MouseEvent mouseInfoSignal)
-  in
-    Signal.foldp update initialModel mergedSignals
+modelSignal : Signal Model
+modelSignal =
+    Signal.foldp update initialModel mouseInfoSignal
 
 --
 
-main : Signal Element
+main : Signal Html
 main =
-  Signal.map view model
+  Signal.map view modelSignal

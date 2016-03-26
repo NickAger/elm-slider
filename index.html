@@ -3,8 +3,8 @@
   <head>
     <title>Test Slider</title>
     <style>
-      .slider-track {  width:.8em; background:#eeeeee; border-radius:4px; border: 1px solid #dddddd; position: relative }
-      .slider-thumb {  border: 1px solid #cccccc; background:#f6f6f6; left:-.3em; margin-left:0; margin-bottom: -.6em; position: absolute; z-index:2; width: 1.2em; height: 1.2em; border-radius: 4px;}
+      .slider-track {  width: 12px; background:#eeeeee; border-radius:4px; border: 1px solid #dddddd; position: relative }
+      .slider-thumb {  border: 1px solid #cccccc; background:#f6f6f6; left:-4px; margin-left:0; margin-bottom: -4px; position: absolute; z-index:2; width: 18px; height: 18px; border-radius: 4px;}
     </style>
   </head>
 
@@ -12,18 +12,18 @@
 
   </body>
 
-  <script src="elm.js"></script>
+  <script src="slider.js"></script>
 
   <!-- Run our Elm app! -->
   <script>
-    Elm.fullscreen(Elm.SignupForm);
+    Elm.fullscreen(Elm.Slider);
   </script>
 
-<script   src="https://code.jquery.com/jquery-2.2.2.js"   integrity="sha256-4/zUCqiq0kqxhZIyp4G0Gk+AOtCJsY1TA00k5ClsZYE="   crossorigin="anonymous"></script>
+  <!-- Need jQuery to find out the top-left of the slider-track -->
+  <script src="https://code.jquery.com/jquery-2.2.2.js" integrity="sha256-4/zUCqiq0kqxhZIyp4G0Gk+AOtCJsY1TA00k5ClsZYE=" crossorigin="anonymous"></script>
   <script>
   $(function() {
-  var track = $(".slider-track")[0];
-  Console.log(track..offset());
+  console.log($(".slider-track").offset());
 });
   </script>
 

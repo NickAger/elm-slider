@@ -32,6 +32,13 @@ view  model =
 
 -- UPDATE
 
+update : MouseInfo -> Model -> Model
+update mouseInfo model =
+  if mouseInfo.isDown && (mouseDownWithinSlider mouseInfo model) then
+    { model | percentValue =  (barPercent mouseInfo model)}
+  else
+    model
+
 mouseDownWithinSlider : MouseInfo -> Model -> Bool
 mouseDownWithinSlider mouseInfo model =
   let
@@ -52,13 +59,6 @@ barPercent mouseInfo model =
       barPercent =  round (100 - ((posY - y) / (height / 100)))
     in
       (max 0 (min 100 barPercent))
-
-update : MouseInfo -> Model -> Model
-update mouseInfo model =
-  if mouseInfo.isDown && (mouseDownWithinSlider mouseInfo model) then
-    { model | percentValue =  (barPercent mouseInfo model)}
-  else
-    model
 
 --
 initialModel : Model

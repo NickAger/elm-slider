@@ -10341,9 +10341,9 @@ Elm.Slider.make = function (_elm) {
    return _elm.Slider.values = {_op: _op
                                ,Model: Model
                                ,view: view
+                               ,update: update
                                ,mouseDownWithinSlider: mouseDownWithinSlider
                                ,barPercent: barPercent
-                               ,update: update
                                ,initialModel: initialModel
                                ,Position: Position
                                ,MouseInfo: MouseInfo

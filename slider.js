@@ -10295,7 +10295,6 @@ Elm.Slider.make = function (_elm) {
    var _op = {};
    var toPosition = function (_p0) {    var _p1 = _p0;return {x: _p1._0,y: _p1._1};};
    var zeroPosition = toPosition({ctor: "_Tuple2",_0: 0,_1: 0});
-   var zeroMouseInfo = {position: zeroPosition,downPosition: zeroPosition,isDown: false};
    var mouseDownPosition = function () {
       var onlyDown = function (isDown) {    return _U.eq(isDown,true);};
       var mouseDown = A3($Signal.filter,onlyDown,false,$Mouse.isDown);
@@ -10303,12 +10302,16 @@ Elm.Slider.make = function (_elm) {
    }();
    var mouseInfoSignal = function () {
       var onlyDown = function (mouseInfo) {    return _U.eq(mouseInfo.isDown,true);};
-      var toMouseInfo = F3(function (position,mouseDownPosition,isDown) {
+      var zeroMouseInfoWithIsDown = {position: zeroPosition,downPosition: zeroPosition,isDown: false};
+      var toMouseInfo = function (fullMouseInfo) {    return {position: fullMouseInfo.position,downPosition: fullMouseInfo.downPosition};};
+      var toMouseInfoWithIsDown = F3(function (position,mouseDownPosition,isDown) {
          return {position: toPosition(position),downPosition: mouseDownPosition,isDown: isDown};
       });
-      return A3($Signal.filter,onlyDown,zeroMouseInfo,A4($Signal.map3,toMouseInfo,$Mouse.position,mouseDownPosition,$Mouse.isDown));
+      return A2($Signal.map,
+      toMouseInfo,
+      A3($Signal.filter,onlyDown,zeroMouseInfoWithIsDown,A4($Signal.map3,toMouseInfoWithIsDown,$Mouse.position,mouseDownPosition,$Mouse.isDown)));
    }();
-   var MouseInfo = F3(function (a,b,c) {    return {position: a,downPosition: b,isDown: c};});
+   var MouseInfo = F2(function (a,b) {    return {position: a,downPosition: b};});
    var Position = F2(function (a,b) {    return {x: a,y: b};});
    var initialModel = {topLeft: {x: 8,y: 8},height: 200,percentValue: 50};
    var barPercent = F2(function (mouseInfo,model) {
@@ -10352,7 +10355,6 @@ Elm.Slider.make = function (_elm) {
                                ,MouseInfo: MouseInfo
                                ,toPosition: toPosition
                                ,zeroPosition: zeroPosition
-                               ,zeroMouseInfo: zeroMouseInfo
                                ,mouseDownPosition: mouseDownPosition
                                ,mouseInfoSignal: mouseInfoSignal
                                ,modelSignal: modelSignal

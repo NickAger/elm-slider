@@ -80,7 +80,6 @@ type alias MouseInfo =
   {
     position : Position
   , downPosition : Position
-  , isDown : Bool
   }
 
 
@@ -91,13 +90,6 @@ zeroPosition : Position
 zeroPosition =
   toPosition (0, 0)
 
-zeroMouseInfo : MouseInfo
-zeroMouseInfo =
-  {
-    position = zeroPosition
-  , downPosition = zeroPosition
-  , isDown = False
-  }
 
 mouseDownPosition : Signal Position
 mouseDownPosition =
@@ -114,15 +106,28 @@ mouseDownPosition =
 mouseInfoSignal : Signal MouseInfo
 mouseInfoSignal =
   let
-    toMouseInfo position mouseDownPosition isDown =
+    toMouseInfoWithIsDown position mouseDownPosition isDown =
     { position = toPosition position
       , downPosition = mouseDownPosition
       , isDown = isDown
      }
+
+    toMouseInfo fullMouseInfo =
+      { position = fullMouseInfo.position
+      , downPosition = fullMouseInfo.downPosition
+      }
+
+    zeroMouseInfoWithIsDown =
+      {
+        position = zeroPosition
+      , downPosition = zeroPosition
+      , isDown = False
+      }
     onlyDown = (\mouseInfo -> mouseInfo.isDown == True)
   in
-    Signal.map3 toMouseInfo Mouse.position mouseDownPosition Mouse.isDown
-      |> Signal.filter onlyDown zeroMouseInfo
+    Signal.map3 toMouseInfoWithIsDown Mouse.position mouseDownPosition Mouse.isDown
+      |> Signal.filter onlyDown zeroMouseInfoWithIsDown
+      |> Signal.map toMouseInfo
 
 modelSignal : Signal Model
 modelSignal =

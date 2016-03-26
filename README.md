@@ -1,2 +1,2 @@
 # elm-slider
-Similar to https://jqueryui.com/slider/ in elm
+Elm version of [jQueryUI Slider](https://jqueryui.com/slider/)

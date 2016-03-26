@@ -34,7 +34,7 @@ view  model =
 
 update : MouseInfo -> Model -> Model
 update mouseInfo model =
-  if mouseInfo.isDown && (mouseDownWithinSlider mouseInfo model) then
+  if mouseDownWithinSlider mouseInfo model then
     { model | percentValue =  (barPercent mouseInfo model)}
   else
     model
@@ -83,8 +83,21 @@ type alias MouseInfo =
   , isDown : Bool
   }
 
+
 toPosition : (Int, Int) -> Position
 toPosition (x, y) = { x = x, y = y }
+
+zeroPosition : Position
+zeroPosition =
+  toPosition (0, 0)
+
+zeroMouseInfo : MouseInfo
+zeroMouseInfo =
+  {
+    position = zeroPosition
+  , downPosition = zeroPosition
+  , isDown = False
+  }
 
 mouseDownPosition : Signal Position
 mouseDownPosition =
@@ -106,8 +119,10 @@ mouseInfoSignal =
       , downPosition = mouseDownPosition
       , isDown = isDown
      }
+    onlyDown = (\mouseInfo -> mouseInfo.isDown == True)
   in
     Signal.map3 toMouseInfo Mouse.position mouseDownPosition Mouse.isDown
+      |> Signal.filter onlyDown zeroMouseInfo
 
 modelSignal : Signal Model
 modelSignal =

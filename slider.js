@@ -10277,6 +10277,72 @@ Elm.Html.Attributes.make = function (_elm) {
                                         ,property: property
                                         ,attribute: attribute};
 };
+Elm.Html = Elm.Html || {};
+Elm.Html.Events = Elm.Html.Events || {};
+Elm.Html.Events.make = function (_elm) {
+   "use strict";
+   _elm.Html = _elm.Html || {};
+   _elm.Html.Events = _elm.Html.Events || {};
+   if (_elm.Html.Events.values) return _elm.Html.Events.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Json$Decode = Elm.Json.Decode.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $VirtualDom = Elm.VirtualDom.make(_elm);
+   var _op = {};
+   var keyCode = A2($Json$Decode._op[":="],"keyCode",$Json$Decode.$int);
+   var targetChecked = A2($Json$Decode.at,_U.list(["target","checked"]),$Json$Decode.bool);
+   var targetValue = A2($Json$Decode.at,_U.list(["target","value"]),$Json$Decode.string);
+   var defaultOptions = $VirtualDom.defaultOptions;
+   var Options = F2(function (a,b) {    return {stopPropagation: a,preventDefault: b};});
+   var onWithOptions = $VirtualDom.onWithOptions;
+   var on = $VirtualDom.on;
+   var messageOn = F3(function (name,addr,msg) {    return A3(on,name,$Json$Decode.value,function (_p0) {    return A2($Signal.message,addr,msg);});});
+   var onClick = messageOn("click");
+   var onDoubleClick = messageOn("dblclick");
+   var onMouseMove = messageOn("mousemove");
+   var onMouseDown = messageOn("mousedown");
+   var onMouseUp = messageOn("mouseup");
+   var onMouseEnter = messageOn("mouseenter");
+   var onMouseLeave = messageOn("mouseleave");
+   var onMouseOver = messageOn("mouseover");
+   var onMouseOut = messageOn("mouseout");
+   var onBlur = messageOn("blur");
+   var onFocus = messageOn("focus");
+   var onSubmit = messageOn("submit");
+   var onKey = F3(function (name,addr,handler) {    return A3(on,name,keyCode,function (code) {    return A2($Signal.message,addr,handler(code));});});
+   var onKeyUp = onKey("keyup");
+   var onKeyDown = onKey("keydown");
+   var onKeyPress = onKey("keypress");
+   return _elm.Html.Events.values = {_op: _op
+                                    ,onBlur: onBlur
+                                    ,onFocus: onFocus
+                                    ,onSubmit: onSubmit
+                                    ,onKeyUp: onKeyUp
+                                    ,onKeyDown: onKeyDown
+                                    ,onKeyPress: onKeyPress
+                                    ,onClick: onClick
+                                    ,onDoubleClick: onDoubleClick
+                                    ,onMouseMove: onMouseMove
+                                    ,onMouseDown: onMouseDown
+                                    ,onMouseUp: onMouseUp
+                                    ,onMouseEnter: onMouseEnter
+                                    ,onMouseLeave: onMouseLeave
+                                    ,onMouseOver: onMouseOver
+                                    ,onMouseOut: onMouseOut
+                                    ,on: on
+                                    ,onWithOptions: onWithOptions
+                                    ,defaultOptions: defaultOptions
+                                    ,targetValue: targetValue
+                                    ,targetChecked: targetChecked
+                                    ,keyCode: keyCode
+                                    ,Options: Options};
+};
 Elm.Slider = Elm.Slider || {};
 Elm.Slider.make = function (_elm) {
    "use strict";
@@ -10287,27 +10353,70 @@ Elm.Slider.make = function (_elm) {
    $Debug = Elm.Debug.make(_elm),
    $Html = Elm.Html.make(_elm),
    $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $Html$Events = Elm.Html.Events.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
    $Mouse = Elm.Mouse.make(_elm),
    $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm);
+   $Signal = Elm.Signal.make(_elm),
+   $String = Elm.String.make(_elm);
    var _op = {};
-   var toPosition = function (_p0) {    var _p1 = _p0;return {x: _p1._0,y: _p1._1};};
+   var scrollInbox = $Signal.mailbox(50);
+   var Scroll = function (a) {    return {ctor: "Scroll",_0: a};};
+   var NoOp = {ctor: "NoOp"};
+   var mainInbox = $Signal.mailbox(NoOp);
+   var mainSignal = mainInbox.signal;
+   var scrollChanges = Elm.Native.Port.make(_elm).outboundSignal("scrollChanges",function (v) {    return v;},scrollInbox.signal);
+   var properties = Elm.Native.Port.make(_elm).inboundSignal("properties",
+   "Slider.Properties",
+   function (v) {
+      return typeof v === "object" && "topLeft" in v && "height" in v ? {_: {}
+                                                                        ,topLeft: typeof v.topLeft === "object" && "x" in v.topLeft && "y" in v.topLeft ? {_: {}
+                                                                                                                                                          ,x: typeof v.topLeft.x === "number" && isFinite(v.topLeft.x) && Math.floor(v.topLeft.x) === v.topLeft.x ? v.topLeft.x : _U.badPort("an integer",
+                                                                                                                                                          v.topLeft.x)
+                                                                                                                                                          ,y: typeof v.topLeft.y === "number" && isFinite(v.topLeft.y) && Math.floor(v.topLeft.y) === v.topLeft.y ? v.topLeft.y : _U.badPort("an integer",
+                                                                                                                                                          v.topLeft.y)} : _U.badPort("an object with fields `x`, `y`",
+                                                                        v.topLeft)
+                                                                        ,height: typeof v.height === "number" && isFinite(v.height) && Math.floor(v.height) === v.height ? v.height : _U.badPort("an integer",
+                                                                        v.height)} : _U.badPort("an object with fields `topLeft`, `height`",v);
+   });
+   var initialProperties = {topLeft: {x: 8,y: 8},height: 200};
+   var Properties = F2(function (a,b) {    return {topLeft: a,height: b};});
+   var barPercent = function (_p0) {
+      var _p1 = _p0;
+      var _p2 = _p1._1;
+      var height = $Basics.toFloat(_p2.height);
+      var y = $Basics.toFloat(_p2.topLeft.y);
+      var posY = $Basics.toFloat(_p1._0.position.y);
+      var barPercent = $Basics.round(100 - (posY - y) / (height / 100));
+      return A2($Basics.max,0,A2($Basics.min,100,barPercent));
+   };
+   var mouseDownWithinSlider = function (_p3) {
+      var _p4 = _p3;
+      var _p6 = _p4._1;
+      var _p5 = _p4._0;
+      var height = _p6.height;
+      var y = _p6.topLeft.y;
+      var my = _p5.downPosition.y;
+      var x = _p6.topLeft.x;
+      var mx = _p5.downPosition.x;
+      return _U.cmp(mx,x - 10) > 0 && _U.cmp(mx,x + 10) < 0 && (_U.cmp(my,y) > -1 && _U.cmp(my,y + height) < 1);
+   };
+   var toPosition = function (_p7) {    var _p8 = _p7;return {x: _p8._0,y: _p8._1};};
    var zeroPosition = toPosition({ctor: "_Tuple2",_0: 0,_1: 0});
+   var zeroMouseInfo = {position: zeroPosition,downPosition: zeroPosition};
    var mouseDownPosition = function () {
       var onlyDown = function (isDown) {    return _U.eq(isDown,true);};
       var mouseDown = A3($Signal.filter,onlyDown,false,$Mouse.isDown);
       return A2($Signal.map,toPosition,A2($Signal.sampleOn,mouseDown,$Mouse.position));
    }();
    var mouseInfoSignal = function () {
-      var onlyDown = function (_p2) {    var _p3 = _p2;return _U.eq(_p3._0,true);};
-      var zeroMouseInfo = {position: zeroPosition,downPosition: zeroPosition};
+      var onlyDown = function (_p9) {    var _p10 = _p9;return _U.eq(_p10._0,true);};
       var toMouseInfo = F2(function (position,mouseDownPosition) {    return {position: toPosition(position),downPosition: mouseDownPosition};});
       return A2($Signal.map,
-      function (_p4) {
-         var _p5 = _p4;
-         return _p5._1;
+      function (_p11) {
+         var _p12 = _p11;
+         return _p12._1;
       },
       A3($Signal.filter,
       onlyDown,
@@ -10317,52 +10426,77 @@ Elm.Slider.make = function (_elm) {
       $Mouse.isDown,
       A3($Signal.map2,toMouseInfo,$Mouse.position,mouseDownPosition))));
    }();
+   var overThumbSignal = A2($Signal.map,
+   function (_p13) {
+      return {ctor: "_Tuple0"};
+   },
+   A2($Signal.map,
+   function (percent) {
+      return A2($Signal.message,scrollInbox.address,percent);
+   },
+   A2($Signal.map,
+   barPercent,
+   A3($Signal.filter,
+   mouseDownWithinSlider,
+   {ctor: "_Tuple2",_0: zeroMouseInfo,_1: initialProperties},
+   A3($Signal.map2,F2(function (v0,v1) {    return {ctor: "_Tuple2",_0: v0,_1: v1};}),mouseInfoSignal,properties)))));
    var MouseInfo = F2(function (a,b) {    return {position: a,downPosition: b};});
    var Position = F2(function (a,b) {    return {x: a,y: b};});
-   var initialModel = {topLeft: {x: 8,y: 8},height: 200,percentValue: 50};
-   var barPercent = F2(function (mouseInfo,model) {
-      var height = $Basics.toFloat(model.height);
-      var y = $Basics.toFloat(model.topLeft.y);
-      var posY = $Basics.toFloat(mouseInfo.position.y);
-      var barPercent = $Basics.round(100 - (posY - y) / (height / 100));
-      return A2($Basics.max,0,A2($Basics.min,100,barPercent));
+   var initialModel = {percentValue: 50};
+   var update = F2(function (action,model) {
+      var _p14 = action;
+      if (_p14.ctor === "NoOp") {
+            return model;
+         } else {
+            return _U.update(model,{percentValue: _p14._0});
+         }
    });
-   var mouseDownWithinSlider = F2(function (mouseInfo,model) {
-      var height = model.height;
-      var y = model.topLeft.y;
-      var my = mouseInfo.downPosition.y;
-      var x = model.topLeft.x;
-      var mx = mouseInfo.downPosition.x;
-      return _U.cmp(mx,x - 10) > 0 && _U.cmp(mx,x + 10) < 0 && (_U.cmp(my,y) > -1 && _U.cmp(my,y + height) < 1);
+   var modelSignal = A3($Signal.foldp,update,initialModel,mainSignal);
+   var renderThumb = F2(function (address,model) {
+      return A2($Html.div,
+      _U.list([$Html$Attributes.$class("slider-thumb")
+              ,$Html$Attributes.style(_U.list([{ctor: "_Tuple2",_0: "bottom",_1: A2($Basics._op["++"],$Basics.toString(model.percentValue),"%")}]))
+              ,A3($Html$Events.on,
+              "scroll",
+              $Html$Events.targetValue,
+              function (str) {
+                 var value = A2($Result.withDefault,0,$String.toInt(str));
+                 return A2($Signal.message,address,Scroll(value));
+              })]),
+      _U.list([]));
    });
-   var update = F2(function (mouseInfo,model) {
-      return A2(mouseDownWithinSlider,mouseInfo,model) ? _U.update(model,{percentValue: A2(barPercent,mouseInfo,model)}) : model;
-   });
-   var modelSignal = A3($Signal.foldp,update,initialModel,mouseInfoSignal);
-   var view = function (model) {
+   var view = F2(function (address,model) {
+      var height = 200;
       return A2($Html.div,
       _U.list([$Html$Attributes.$class("slider-track")
-              ,$Html$Attributes.style(_U.list([{ctor: "_Tuple2",_0: "height",_1: A2($Basics._op["++"],$Basics.toString(model.height),"px")}]))]),
-      _U.list([A2($Html.div,
-      _U.list([$Html$Attributes.$class("slider-thumb")
-              ,$Html$Attributes.style(_U.list([{ctor: "_Tuple2",_0: "bottom",_1: A2($Basics._op["++"],$Basics.toString(model.percentValue),"%")}]))]),
-      _U.list([]))]));
-   };
-   var main = A2($Signal.map,view,modelSignal);
-   var Model = F3(function (a,b,c) {    return {topLeft: a,height: b,percentValue: c};});
+              ,$Html$Attributes.style(_U.list([{ctor: "_Tuple2",_0: "height",_1: A2($Basics._op["++"],$Basics.toString(height),"px")}]))]),
+      _U.list([A2(renderThumb,address,model)]));
+   });
+   var main = A2($Signal.map,view(mainInbox.address),modelSignal);
+   var Model = function (a) {    return {percentValue: a};};
    return _elm.Slider.values = {_op: _op
                                ,Model: Model
                                ,view: view
+                               ,renderThumb: renderThumb
                                ,update: update
-                               ,mouseDownWithinSlider: mouseDownWithinSlider
-                               ,barPercent: barPercent
                                ,initialModel: initialModel
                                ,Position: Position
                                ,MouseInfo: MouseInfo
                                ,toPosition: toPosition
                                ,zeroPosition: zeroPosition
                                ,mouseDownPosition: mouseDownPosition
+                               ,zeroMouseInfo: zeroMouseInfo
                                ,mouseInfoSignal: mouseInfoSignal
+                               ,overThumbSignal: overThumbSignal
+                               ,mouseDownWithinSlider: mouseDownWithinSlider
+                               ,barPercent: barPercent
+                               ,Properties: Properties
+                               ,initialProperties: initialProperties
+                               ,NoOp: NoOp
+                               ,Scroll: Scroll
+                               ,mainInbox: mainInbox
+                               ,scrollInbox: scrollInbox
+                               ,mainSignal: mainSignal
                                ,modelSignal: modelSignal
                                ,main: main};
 };

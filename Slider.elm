@@ -9,25 +9,67 @@ import Signal exposing (sampleOn)
 
 type alias Model =
   {
-    topLeft : Position
-  , height : Int
+    properties: { topLeft : Position, height : Int}
   , percentValue : Int
   }
+
+-- CSS
+
+trackCSS : List (String, String)
+trackCSS =
+  [
+    ("width", "12px")
+  , ("background", "#eeeeee")
+  , ("border-radius", "4px")
+  , ("border", "1px solid #dddddd")
+  , ("position",  "relative")
+  , ("margin-left", "10px")
+  , ("margin-top", "10px")
+  ]
+
+thumbCSS : List (String, String)
+thumbCSS =
+  [
+    ("border", "1px solid #cccccc")
+  , ("background", "#f6f6f6")
+  , ("left", "-4px")
+  , ("margin-left", "0")
+  , ("margin-bottom",  "-4px")
+  , ("position",  "absolute")
+  , ("z-index", "2")
+  , ("width", "18px")
+  , ("height", "18px")
+  , ("border-radius", "4px")
+  ]
+
+-- VIEW
 
 view :  Model -> Html
 view  model =
   div
+    []
     [
-      class "slider-track"
-    , style [("height", toString model.height ++ "px")]
+      renderSlider model
+    , renderModel model
     ]
+
+renderSlider : Model -> Html
+renderSlider model =
+  div
+    [ style (("height", toString model.properties.height ++ "px") :: trackCSS) ]
     [
       div
-        [
-          class "slider-thumb"
-        , style [("bottom", toString model.percentValue ++ "%")]
-        ]
+        [ style (("bottom", toString model.percentValue ++ "%") :: thumbCSS )]
         []
+    ]
+
+renderModel : Model -> Html
+renderModel model =
+  div
+    []
+    [
+      hr [] []
+    , text <| toString model
     ]
 
 -- UPDATE
@@ -43,10 +85,10 @@ mouseDownWithinSlider : MouseInfo -> Model -> Bool
 mouseDownWithinSlider mouseInfo model =
   let
     mx = mouseInfo.downPosition.x
-    x = model.topLeft.x
+    x = model.properties.topLeft.x
     my = mouseInfo.downPosition.y
-    y = model.topLeft.y
-    height = model.height
+    y = model.properties.topLeft.y
+    height = model.properties.height
   in
    (mx > x - 10 && mx < x + 10) && (my >= y && my <= y + height)
 
@@ -54,17 +96,17 @@ barPercent : MouseInfo -> Model -> Int
 barPercent mouseInfo model =
     let
       posY = toFloat mouseInfo.position.y
-      y = toFloat model.topLeft.y
-      height = toFloat model.height
+      y = toFloat model.properties.topLeft.y
+      height = toFloat model.properties.height
       barPercent =  round (100 - ((posY - y) / (height / 100)))
     in
       (max 0 (min 100 barPercent))
 
 --
-initialModel : Model
-initialModel =
-  { topLeft = { x = 8, y = 8 }
-  , height = 200
+initialModel : Int -> Model
+-- topLeft should be retrieved from jquery#offset
+initialModel height =
+  { properties = { topLeft = { x = 10, y = 10 }, height = height }
   , percentValue = 50
   }
 
@@ -125,7 +167,7 @@ mouseInfoSignal =
 
 modelSignal : Signal Model
 modelSignal =
-    Signal.foldp update initialModel mouseInfoSignal
+    Signal.foldp update (initialModel 200) mouseInfoSignal
 
 --
 

@@ -1,134 +1,161 @@
-module Slider where
+module Slider exposing (Model, Msg, update, view, init, subscriptions)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, style)
-import Mouse
-import Signal exposing (sampleOn)
+import Html.App as App
+import Html.Attributes exposing (..)
+import Html.Events exposing (on)
+import Json.Decode as Json exposing ((:=))
+import Mouse exposing (Position)
 
---
+main : Program Never
+main =
+  App.program
+    { init = ((init 50 200 (Position 10 10)), Cmd.none )
+    , view = view
+    , update = update
+    , subscriptions = subscriptions
+    }
+
+-- MODEL
 
 type alias Model =
-  {
-    topLeft : Position
-  , height : Int
-  , percentValue : Int
+  { percentValue : Int
+  , isDragging : Bool
+  , properties : Properties
   }
 
-view :  Model -> Html
-view  model =
-  div
-    [
-      class "slider-track"
-    , style [("height", toString model.height ++ "px")]
-    ]
-    [
-      div
-        [
-          class "slider-thumb"
-        , style [("bottom", toString model.percentValue ++ "%")]
-        ]
-        []
-    ]
+type alias Properties =
+  { topLeft : Position
+  , height : Int
+  }
+
+init : Int -> Int -> Position -> Model
+init percent height position =
+  Model percent False (Properties position height)
 
 -- UPDATE
 
-update : MouseInfo -> Model -> Model
-update mouseInfo model =
-  if mouseDownWithinSlider mouseInfo model then
-    { model | percentValue =  (barPercent mouseInfo model)}
-  else
-    model
+type Msg
+    = DragStart Position
+    | DragAt Position
+    | DragEnd Position
 
-mouseDownWithinSlider : MouseInfo -> Model -> Bool
-mouseDownWithinSlider mouseInfo model =
-  let
-    mx = mouseInfo.downPosition.x
-    x = model.topLeft.x
-    my = mouseInfo.downPosition.y
-    y = model.topLeft.y
-    height = model.height
-  in
-   (mx > x - 10 && mx < x + 10) && (my >= y && my <= y + height)
+update : Msg -> Model -> (Model, Cmd Msg)
+update msg model =
+  ( updateHelp msg model, Cmd.none )
 
-barPercent : MouseInfo -> Model -> Int
-barPercent mouseInfo model =
+
+updateHelp : Msg -> Model -> Model
+updateHelp msg ({percentValue, isDragging, properties} as model) =
+  case msg of
+    DragStart xy ->
+      Model (barPercent xy model) True properties
+
+    DragAt xy ->
+      Model (barPercent xy model) isDragging properties
+
+    DragEnd _ ->
+      Model percentValue False properties
+
+barPercent : Position -> Model -> Int
+barPercent position model =
     let
-      posY = toFloat mouseInfo.position.y
-      y = toFloat model.topLeft.y
-      height = toFloat model.height
-      barPercent =  round (100 - ((posY - y) / (height / 100)))
+      mouseY = toFloat position.y
+      barY = toFloat model.properties.topLeft.y
+      height = toFloat model.properties.height
+      barPercent =  round (100 - ((mouseY - barY) / (height / 100)))
     in
-      (max 0 (min 100 barPercent))
+      clamp 0 100 barPercent
 
---
-initialModel : Model
-initialModel =
-  { topLeft = { x = 8, y = 8 }
-  , height = 200
-  , percentValue = 50
-  }
+-- SUBSCRIPTIONS
 
--- SIGNALS
+subscriptions : Model -> Sub Msg
+subscriptions model =
+  if model.isDragging then
+    Sub.batch [ Mouse.moves DragAt, Mouse.ups DragEnd ]
+  else
+    Sub.none
 
-type alias Position =
-  {
-    x : Int
-  , y : Int
-  }
+-- VIEW
 
-type alias MouseInfo =
-  {
-    position : Position
-  , downPosition : Position
-  }
+{-
+view :  Model -> Html Msg
+view  model =
+  div
+    []
+    [
+      renderSlider model
+    , renderModel model
+    ]
+-}
 
+view : Model -> Html Msg
+view = renderSlider
 
-toPosition : (Int, Int) -> Position
-toPosition (x, y) = { x = x, y = y }
+renderSlider : Model -> Html Msg
+renderSlider model =
+  div
+    [ style ((position model.properties) ++ trackCSS) ]
+    [
+      div
+        [ onMouseDown, style (("bottom", percent model.percentValue) :: thumbCSS )]
+        []
+    ]
 
-zeroPosition : Position
-zeroPosition =
-  toPosition (0, 0)
+renderModel : Model -> Html Msg
+renderModel model =
+  div
+    []
+    [
+      hr [] []
+    , text <| toString model
+    ]
 
+position : Properties -> List (String, String)
+position properties =
+  [
+    ("height", px properties.height)
+  , ("top", px properties.topLeft.y)
+  , ("left", px properties.topLeft.x)
+  ]
 
-mouseDownPosition : Signal Position
-mouseDownPosition =
-  let
-    onlyDown = (\isDown -> isDown == True)
-    mouseDown = Mouse.isDown
-      |> Signal.filter onlyDown False
-  in
-    Mouse.position
-      |> sampleOn mouseDown
-      |> Signal.map toPosition
+px : Int -> String
+px number =
+  toString number ++ "px"
 
+percent : Int -> String
+percent number =
+  toString number ++ "%"
 
-mouseInfoSignal : Signal MouseInfo
-mouseInfoSignal =
-  let
-    toMouseInfo position mouseDownPosition =
-    { position = toPosition position
-      , downPosition = mouseDownPosition
-     }
+onMouseDown : Attribute Msg
+onMouseDown =
+  on "mousedown" (Json.map DragStart Mouse.position)
 
-    zeroMouseInfo =
-      {
-        position = zeroPosition
-      , downPosition = zeroPosition
-      }
-    onlyDown = (\(isDown, _) -> isDown == True)
-  in
-    Signal.map2 toMouseInfo Mouse.position mouseDownPosition
-      |> Signal.map2 (,) Mouse.isDown
-      |> Signal.filter onlyDown (False, zeroMouseInfo)
-      |> Signal.map (\(_, mouseInfo) -> mouseInfo) -- no longer need isDown, only necessary for filter
+-- CSS
 
-modelSignal : Signal Model
-modelSignal =
-    Signal.foldp update initialModel mouseInfoSignal
+trackCSS : List (String, String)
+trackCSS =
+  [
+    ("width", "12px")
+  , ("position", "absolute")
+  , ("background", "#eeeeee")
+  , ("border-radius", "4px")
+  , ("border", "1px solid #dddddd")
+  , ("margin-left", "10px")
+  , ("margin-top", "10px")
+  ]
 
---
-
-main : Signal Html
-main =
-  Signal.map view modelSignal
+thumbCSS : List (String, String)
+thumbCSS =
+  [
+    ("border", "1px solid #cccccc")
+  , ("background", "#f6f6f6")
+  , ("left", "-4px")
+  , ("margin-left", "0")
+  , ("margin-bottom",  "-4px")
+  , ("position",  "absolute")
+  , ("z-index", "2")
+  , ("width", "18px")
+  , ("height", "18px")
+  , ("border-radius", "4px")
+  ]

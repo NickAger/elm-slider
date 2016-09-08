@@ -16,15 +16,22 @@
 
   <!-- Run our Elm app! -->
   <script>
-    Elm.fullscreen(Elm.Slider);
+    var elmApp = Elm.fullscreen(Elm.Slider, { properties: {topLeft:{x:8, y:8}, height: 200} });
+    elmApp.ports.scrollChanges.subscribe(function(value) {
+      $(".slider-thumb").each(function(thumb){
+        var event = new CustomEvent('scroll', { 'detail': value });
+        thumb.dispatchEvent(event);
+      })
+      console.log(model);
+    });
   </script>
 
   <!-- Need jQuery to find out the top-left of the slider-track -->
   <script src="https://code.jquery.com/jquery-2.2.2.js" integrity="sha256-4/zUCqiq0kqxhZIyp4G0Gk+AOtCJsY1TA00k5ClsZYE=" crossorigin="anonymous"></script>
   <script>
   $(function() {
-  console.log($(".slider-track").offset());
-});
+    // $(".slider-track").offset()
+    elmApp.ports.properties.send({topLeft:{x:8, y:8}, height: 200});
+  });
   </script>
-
 </html>

@@ -6,11 +6,12 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (on)
 import Json.Decode as Json exposing ((:=))
 import Mouse exposing (Position)
+import Maybe exposing (..)
 
 main : Program Never
 main =
   App.program
-    { init = ((init 50 200 (Position 10 10)), Cmd.none )
+    { init = ((init 50 726 (Position 10 10)), Cmd.none )
     , view = view
     , update = update
     , subscriptions = subscriptions
@@ -20,7 +21,7 @@ main =
 
 type alias Model =
   { percentValue : Int
-  , isDragging : Bool
+  , mouseDownOffset : Maybe Int
   , properties : Properties
   }
 
@@ -31,14 +32,14 @@ type alias Properties =
 
 init : Int -> Int -> Position -> Model
 init percent height position =
-  Model percent False (Properties position height)
+  Model percent Nothing (Properties position height)
 
 -- UPDATE
 
 type Msg
-    = DragStart Position
-    | DragAt Position
-    | DragEnd Position
+    = DragStart Int
+    | DragAt Int
+    | DragEnd
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -46,35 +47,53 @@ update msg model =
 
 
 updateHelp : Msg -> Model -> Model
-updateHelp msg ({percentValue, isDragging, properties} as model) =
+updateHelp msg ({percentValue, mouseDownOffset, properties} as model) =
   case msg of
-    DragStart xy ->
-      Model (barPercent xy model) True properties
+    DragStart y ->
+      let
+        offset = calculateOffset y model
+      in
+        Model (barPercent y model) (Just offset) properties
 
-    DragAt xy ->
-      Model (barPercent xy model) isDragging properties
+    DragAt y ->
+      Model (barPercent y model) mouseDownOffset properties
 
-    DragEnd _ ->
-      Model percentValue False properties
+    DragEnd ->
+      Model (precentageWithOffsetApplied model) Nothing properties
 
-barPercent : Position -> Model -> Int
-barPercent position model =
+barPercent : Int -> Model -> Int
+barPercent y model =
     let
-      mouseY = toFloat position.y
+      mouseY = toFloat y
       barY = toFloat model.properties.topLeft.y
       height = toFloat model.properties.height
-      barPercent =  round (100 - ((mouseY - barY) / (height / 100)))
+      percent =  round (100 - ((mouseY - barY) / (height / 100)))
     in
-      clamp 0 100 barPercent
+      clamp -2 89 percent
+
+calculateOffset : Int -> Model -> Int
+calculateOffset y model =
+   (barPercent y model) - model.percentValue
 
 -- SUBSCRIPTIONS
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-  if model.isDragging then
-    Sub.batch [ Mouse.moves DragAt, Mouse.ups DragEnd ]
+  if isJust model.mouseDownOffset then
+    Sub.batch [ Mouse.moves makeDragAt, Mouse.ups makeDragEnd ]
   else
     Sub.none
+
+makeDragAt : Position -> Msg
+makeDragAt xy = DragAt xy.y
+
+makeDragEnd : Position -> Msg
+makeDragEnd _ = DragEnd
+
+isJust : Maybe a -> Bool
+isJust aMaybe = case aMaybe of
+  Just _ -> True
+  Nothing -> False
 
 -- VIEW
 
@@ -98,7 +117,7 @@ renderSlider model =
     [ style ((position model.properties) ++ trackCSS) ]
     [
       div
-        [ onMouseDown, style (("bottom", percent model.percentValue) :: thumbCSS )]
+        [ onMouseDown, style (("bottom", percentCSS model) :: thumbCSS )]
         []
     ]
 
@@ -123,39 +142,51 @@ px : Int -> String
 px number =
   toString number ++ "px"
 
-percent : Int -> String
-percent number =
-  toString number ++ "%"
+percentCSS : Model -> String
+percentCSS model =
+  toString (precentageWithOffsetApplied model) ++ "%"
+
+precentageWithOffsetApplied : Model -> Int
+precentageWithOffsetApplied model =
+  let
+    offset = withDefault 0 model.mouseDownOffset
+  in
+    model.percentValue - offset
 
 onMouseDown : Attribute Msg
 onMouseDown =
-  on "mousedown" (Json.map DragStart Mouse.position)
+  on "mousedown" (Json.map makeDragStart Mouse.position)
+
+makeDragStart : Position -> Msg
+makeDragStart position = DragStart position.y
 
 -- CSS
 
 trackCSS : List (String, String)
 trackCSS =
   [
-    ("width", "12px")
+    ("width", "208px")
   , ("position", "absolute")
   , ("background", "#eeeeee")
   , ("border-radius", "4px")
   , ("border", "1px solid #dddddd")
   , ("margin-left", "10px")
   , ("margin-top", "10px")
+  , ("background-image", "url('track.jpg')")
   ]
 
 thumbCSS : List (String, String)
 thumbCSS =
   [
-    ("border", "1px solid #cccccc")
-  , ("background", "#f6f6f6")
-  , ("left", "-4px")
+--    ("border", "1px solid #cccccc")
+--  , ("background", "#f6f6f6")
+    ("left", "48px")
   , ("margin-left", "0")
   , ("margin-bottom",  "-4px")
   , ("position",  "absolute")
   , ("z-index", "2")
-  , ("width", "18px")
-  , ("height", "18px")
+  , ("width", "52px")
+  , ("height", "108px")
   , ("border-radius", "4px")
+  , ("background-image" , "url('thumb.jpg')")
   ]

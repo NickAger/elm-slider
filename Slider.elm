@@ -6,7 +6,8 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (on)
 import Json.Decode as Json exposing ((:=))
 import Mouse exposing (Position)
-import Maybe exposing (..)
+import Maybe
+import Debug exposing (..)
 
 main : Program Never
 main =
@@ -51,20 +52,21 @@ updateHelp msg ({percentValue, mouseDownOffset, properties} as model) =
   case msg of
     DragStart y ->
       let
-        offset = calculateOffset y model
+        offset = log "offset" (calculateOffset y model)
       in
-        Model (barPercent y model) (Just offset) properties
+        Model percentValue (Just offset) properties
 
     DragAt y ->
       Model (barPercent y model) mouseDownOffset properties
 
     DragEnd ->
-      Model (precentageWithOffsetApplied model) Nothing properties
+      Model percentValue Nothing properties
 
 barPercent : Int -> Model -> Int
 barPercent y model =
     let
-      mouseY = toFloat y
+      offset = Maybe.withDefault 0 model.mouseDownOffset
+      mouseY = toFloat (y + offset)
       barY = toFloat model.properties.topLeft.y
       height = toFloat model.properties.height
       percent =  round (100 - ((mouseY - barY) / (height / 100)))
@@ -73,7 +75,12 @@ barPercent y model =
 
 calculateOffset : Int -> Model -> Int
 calculateOffset y model =
-   (barPercent y model) - model.percentValue
+  let
+    barY = toFloat model.properties.topLeft.y
+    height = toFloat model.properties.height
+    percent = toFloat model.percentValue
+  in
+    round (barY + ((100 - percent) * (height / 100))) - y
 
 -- SUBSCRIPTIONS
 
@@ -144,14 +151,7 @@ px number =
 
 percentCSS : Model -> String
 percentCSS model =
-  toString (precentageWithOffsetApplied model) ++ "%"
-
-precentageWithOffsetApplied : Model -> Int
-precentageWithOffsetApplied model =
-  let
-    offset = withDefault 0 model.mouseDownOffset
-  in
-    model.percentValue - offset
+  toString model.percentValue ++ "%"
 
 onMouseDown : Attribute Msg
 onMouseDown =
@@ -167,26 +167,16 @@ trackCSS =
   [
     ("width", "208px")
   , ("position", "absolute")
-  , ("background", "#eeeeee")
-  , ("border-radius", "4px")
-  , ("border", "1px solid #dddddd")
-  , ("margin-left", "10px")
-  , ("margin-top", "10px")
   , ("background-image", "url('track.jpg')")
   ]
 
 thumbCSS : List (String, String)
 thumbCSS =
   [
---    ("border", "1px solid #cccccc")
---  , ("background", "#f6f6f6")
     ("left", "48px")
-  , ("margin-left", "0")
-  , ("margin-bottom",  "-4px")
   , ("position",  "absolute")
   , ("z-index", "2")
   , ("width", "52px")
   , ("height", "108px")
-  , ("border-radius", "4px")
   , ("background-image" , "url('thumb.jpg')")
   ]

@@ -21,9 +21,8 @@ type alias Model =
   , slider2 : Slider.Model
   }
 
-
 init : ( Model, Cmd Msg )
-init = (Model (Slider.init 50 200 (Position 10 10)) (Slider.init 50 200 (Position 50 10)), Cmd.none)
+init = (Model (Slider.init 50 726 (Position 10 10)) (Slider.init 50 726 (Position 218 10)), Cmd.none)
 
 -- UPDATE
 

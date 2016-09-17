@@ -6,13 +6,11 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (on)
 import Json.Decode as Json exposing ((:=))
 import Mouse exposing (Position)
-import Maybe
-import Debug exposing (..)
 
 main : Program Never
 main =
   App.program
-    { init = ((init 50 726 (Position 10 10)), Cmd.none )
+    { init = ((init 50 363 (Position 10 10)), Cmd.none )
     , view = view
     , update = update
     , subscriptions = subscriptions
@@ -52,7 +50,7 @@ updateHelp msg ({percentValue, mouseDownOffset, properties} as model) =
   case msg of
     DragStart y ->
       let
-        offset = log "offset" (calculateOffset y model)
+        offset = calculateOffset y model
       in
         Model percentValue (Just offset) properties
 
@@ -165,7 +163,7 @@ makeDragStart position = DragStart position.y
 trackCSS : List (String, String)
 trackCSS =
   [
-    ("width", "208px")
+    ("width", "104px")
   , ("position", "absolute")
   , ("background-image", "url('track.jpg')")
   ]
@@ -173,10 +171,10 @@ trackCSS =
 thumbCSS : List (String, String)
 thumbCSS =
   [
-    ("left", "48px")
+    ("left", "24px")
   , ("position",  "absolute")
   , ("z-index", "2")
-  , ("width", "52px")
-  , ("height", "108px")
+  , ("width", "26px")
+  , ("height", "54px")
   , ("background-image" , "url('thumb.jpg')")
   ]

@@ -6,16 +6,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (on)
 import Json.Decode as Json exposing ((:=))
 import Mouse exposing (Position)
-
-{-
-Q. Why add the top and height to the model properties?
-A. To transform mouse move coordinates into percentage position of the slider
- relies on the height of the slider and its y position.
- Perhaps an alternative would be to pass that into the update function, perhaps
- renaming Properities as SliderLocation, which could also be passed into the view
- function. Could also pass in the css. Alternatively the slider needs to return is
- width to the parent
--}
+import Maybe.Extra
 
 main : Program Never
 main =
@@ -94,7 +85,7 @@ calculateOffset mouseY top model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-  if isJust model.mouseDownOffset then
+  if Maybe.Extra.isJust model.mouseDownOffset then
     Sub.batch [ Mouse.moves makeDragAt, Mouse.ups makeDragEnd ]
   else
     Sub.none
@@ -105,23 +96,7 @@ makeDragAt xy = DragAt xy.y
 makeDragEnd : Position -> Msg
 makeDragEnd _ = DragEnd
 
-isJust : Maybe a -> Bool
-isJust aMaybe = case aMaybe of
-  Just _ -> True
-  Nothing -> False
-
 -- VIEW
-
-{-
-view :  Model -> Html Msg
-view  model =
-  div
-    []
-    [
-      renderSlider model
-    , renderModel model
-    ]
--}
 
 view : Model -> Html Msg
 view = renderSlider defaultPosition

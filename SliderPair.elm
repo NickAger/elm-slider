@@ -22,7 +22,7 @@ type alias Model =
   }
 
 init : ( Model, Cmd Msg )
-init = (Model (Slider.init 50 363 (Position 10 10)) (Slider.init 50 363 (Position 114 10)), Cmd.none)
+init = (Model (Slider.initModel 50) (Slider.initModel 50), Cmd.none)
 
 -- UPDATE
 
@@ -36,23 +36,23 @@ update msg model =
     case msg of
         Slider1 subMsg ->
           let
-            (slider1, _) = Slider.update subMsg model.slider1
+            slider1Model = Slider.updateMain subMsg model.slider1 10
           in
-            ({ model | slider1 = slider1 }, Cmd.none)
+            ({ model | slider1 = slider1Model }, Cmd.none)
 
         Slider2 subMsg ->
           let
-            (slider2, _) = Slider.update subMsg model.slider2
+            slider2Model = Slider.updateMain subMsg model.slider2 10
           in
-            ({ model | slider2 = slider2 }, Cmd.none)
+            ({ model | slider2 = slider2Model }, Cmd.none)
 
 -- VIEW
 
 view : Model -> Html Msg
 view model =
     div []
-        [ App.map Slider1 (Slider.view model.slider1)
-        , App.map Slider2 (Slider.view model.slider2)
+        [ App.map Slider1 (Slider.renderSlider (Position 10 10) model.slider1)
+        , App.map Slider2 (Slider.renderSlider (Position 114 10) model.slider2)
         ]
 
 -- Subscriptions

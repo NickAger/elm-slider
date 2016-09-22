@@ -1,0 +1,6 @@
+framework module Pods_ServerSlider {
+  umbrella header "Pods-ServerSlider-umbrella.h"
+
+  export *
+  module * { export * }
+}

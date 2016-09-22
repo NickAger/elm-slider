@@ -1,4 +1,4 @@
-module Slider exposing (Model, Msg, update, view, init, subscriptions)
+module Slider exposing (Model, Msg, updateMain, renderSlider, trackWidth, initModel, subscriptions)
 
 import Html exposing (..)
 import Html.App as App
@@ -7,10 +7,20 @@ import Html.Events exposing (on)
 import Json.Decode as Json exposing ((:=))
 import Mouse exposing (Position)
 
+{-
+Q. Why add the top and height to the model properties?
+A. To transform mouse move coordinates into percentage position of the slider
+ relies on the height of the slider and its y position.
+ Perhaps an alternative would be to pass that into the update function, perhaps
+ renaming Properities as SliderLocation, which could also be passed into the view
+ function. Could also pass in the css. Alternatively the slider needs to return is
+ width to the parent
+-}
+
 main : Program Never
 main =
   App.program
-    { init = ((init 50 363 (Position 10 10)), Cmd.none )
+    { init = ((initModel 50), Cmd.none )
     , view = view
     , update = update
     , subscriptions = subscriptions
@@ -21,7 +31,6 @@ main =
 type alias Model =
   { percentValue : Int
   , mouseDownOffset : Maybe Int
-  , properties : Properties
   }
 
 type alias Properties =
@@ -29,9 +38,10 @@ type alias Properties =
   , height : Int
   }
 
-init : Int -> Int -> Position -> Model
-init percent height position =
-  Model percent Nothing (Properties position height)
+
+initModel : Int -> Model
+initModel percent =
+  Model percent Nothing
 
 -- UPDATE
 
@@ -42,43 +52,43 @@ type Msg
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
-  ( updateHelp msg model, Cmd.none )
+  ( updateMain msg model defaultPosition.y, Cmd.none )
 
 
-updateHelp : Msg -> Model -> Model
-updateHelp msg ({percentValue, mouseDownOffset, properties} as model) =
+updateMain : Msg -> Model -> Int -> Model
+updateMain msg model top =
   case msg of
-    DragStart y ->
+    DragStart mouseY ->
       let
-        offset = calculateOffset y model
+        offset = calculateOffset mouseY top model
       in
-        Model percentValue (Just offset) properties
+        Model model.percentValue (Just offset)
 
-    DragAt y ->
-      Model (barPercent y model) mouseDownOffset properties
+    DragAt mouseY ->
+      Model (barPercent mouseY top model) model.mouseDownOffset
 
     DragEnd ->
-      Model percentValue Nothing properties
+      Model model.percentValue Nothing
 
-barPercent : Int -> Model -> Int
-barPercent y model =
+barPercent : Int -> Int -> Model -> Int
+barPercent mouseY top model =
     let
       offset = Maybe.withDefault 0 model.mouseDownOffset
-      mouseY = toFloat (y + offset)
-      barY = toFloat model.properties.topLeft.y
-      height = toFloat model.properties.height
-      percent =  round (100 - ((mouseY - barY) / (height / 100)))
+      y = toFloat (mouseY + offset)
+      barY = toFloat top
+      height = toFloat trackHeight
+      percent =  round (100 - ((y - barY) / (height / 100)))
     in
       clamp -2 89 percent
 
-calculateOffset : Int -> Model -> Int
-calculateOffset y model =
+calculateOffset : Int -> Int -> Model -> Int
+calculateOffset mouseY top model =
   let
-    barY = toFloat model.properties.topLeft.y
-    height = toFloat model.properties.height
+    barY = toFloat top
+    height = toFloat trackHeight
     percent = toFloat model.percentValue
   in
-    round (barY + ((100 - percent) * (height / 100))) - y
+    round (barY + ((100 - percent) * (height / 100))) - mouseY
 
 -- SUBSCRIPTIONS
 
@@ -114,33 +124,24 @@ view  model =
 -}
 
 view : Model -> Html Msg
-view = renderSlider
+view = renderSlider defaultPosition
 
-renderSlider : Model -> Html Msg
-renderSlider model =
+renderSlider : Position -> Model -> Html Msg
+renderSlider position model =
   div
-    [ style ((position model.properties) ++ trackCSS) ]
+    [ style ((positionCSS position) ++ trackCSS) ]
     [
       div
         [ onMouseDown, style (("bottom", percentCSS model) :: thumbCSS )]
         []
     ]
 
-renderModel : Model -> Html Msg
-renderModel model =
-  div
-    []
-    [
-      hr [] []
-    , text <| toString model
-    ]
-
-position : Properties -> List (String, String)
-position properties =
+positionCSS : Position -> List (String, String)
+positionCSS position =
   [
-    ("height", px properties.height)
-  , ("top", px properties.topLeft.y)
-  , ("left", px properties.topLeft.x)
+    ("height", px trackHeight)
+  , ("top", px position.y)
+  , ("left", px position.x)
   ]
 
 px : Int -> String
@@ -163,7 +164,7 @@ makeDragStart position = DragStart position.y
 trackCSS : List (String, String)
 trackCSS =
   [
-    ("width", "104px")
+    ("width", px trackWidth)
   , ("position", "absolute")
   , ("background-image", "url('track.jpg')")
   ]
@@ -178,3 +179,12 @@ thumbCSS =
   , ("height", "54px")
   , ("background-image" , "url('thumb.jpg')")
   ]
+
+trackWidth : Int
+trackWidth = 104
+
+trackHeight : Int
+trackHeight = 363
+
+defaultPosition : Position
+defaultPosition = (Position 10 10)

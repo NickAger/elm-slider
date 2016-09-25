@@ -4,41 +4,90 @@ import Slider
 import Mouse exposing (Position)
 import Html exposing (..)
 import Html.App as App
-
-{-
-
-Consider passing the x,y position of the slider in the view,
-rather than storing it in the model
-
-Slider needs to return it's width so the parent (ie me) can calculate
-its width
-
-Probably use an array of Sliders rather than a dictionary.
-
-Send down the values for all siders each time, send up the values each time.
-
--}
+import Array exposing (Array)
 
 main : Program Never
 main =
-  Html.beginnerProgram { model = initialModel, view = view, update = update }
+  App.program
+    { init = init
+    , view = view
+    , update = update
+    , subscriptions = subscriptions
+    }
 
 -- MODEL
 
-type alias Model =
-  { sliders : Dict SliderId Slider.Model
-  , nextSliderId : SliderId
-  }
+{- might need to change `Array Slider.Model` for a
+ `Dict SliderId Slider.Model` as the server *should*
+ have some concept of sliderId -} 
+type alias Model = { sliders : Array Slider.Model }
 
-type alias SliderId = Int
+numberSliders : Int
+numberSliders = 10
+
+init : ( Model, Cmd Msg )
+init = (initialModel, Cmd.none)
 
 initialModel : Model
 initialModel =
-  Model Dict.empty 0
+  let
+    sliderModels = Array.repeat numberSliders (Slider.initModel 50)
+  in
+    (Model sliderModels)
 
 -- UPDATE
 
 type Msg
-  = Remove SliderId
-  | Add
-  | SliderMsg SliderId Slider.Msg
+  = ServerSlidersUpdate (List Int)
+  | SliderMsg Int Slider.Msg
+
+
+update : Msg -> Model -> (Model, Cmd Msg)
+update msg model =
+  case msg of
+    SliderMsg index sliderMsg ->
+      updateSliderModel index sliderMsg model
+
+    ServerSlidersUpdate sliderValues ->
+      -- only update the model of a slider if not Slider.isDragging
+      -- perhaps combine into updatePercentIfNotDragging
+      (model, Cmd.none)
+
+updateSliderModel : Int -> Slider.Msg -> Model -> (Model, Cmd Msg)
+updateSliderModel index sliderMsg model =
+  let
+    aModel = Array.get index model.sliders
+    updatedSliderModel = Maybe.map (\sliderModel -> Slider.updateMain sliderMsg sliderModel 10) aModel
+    updatedModel' = Maybe.map (\sliderModel -> {model | sliders = (Array.set index sliderModel model.sliders)})  updatedSliderModel
+    updatedModel = Maybe.withDefault model updatedModel'
+  in
+    (updatedModel, Cmd.none)
+
+-- VIEW
+
+view : Model -> Html Msg
+view model =
+  let
+    sliders = Array.indexedMap sliderView model.sliders
+  in
+    div [] (Array.toList sliders)
+
+sliderView : Int -> Slider.Model -> Html Msg
+sliderView index aSliderModel  =
+  let
+    position = Position (10 + (Slider.trackWidth * index)) 10
+  in
+    App.map (SliderMsg index) (Slider.renderSlider position aSliderModel)
+
+-- Subscriptions
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+  let
+    subscriptions = Array.indexedMap subscriptionItem model.sliders
+  in
+    Sub.batch (Array.toList subscriptions)
+
+subscriptionItem : Int -> Slider.Model -> Sub Msg
+subscriptionItem index aSliderModel =
+  Sub.map (SliderMsg index) (Slider.subscriptions aSliderModel)

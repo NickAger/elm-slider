@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.App as App
 import Html.Attributes exposing (..)
 import Html.Events exposing (on)
-import Json.Decode as Json exposing ((:=))
+import Json.Decode as Json
 import Mouse exposing (Position)
 import Maybe.Extra
 
@@ -29,10 +29,12 @@ type alias Properties =
   , height : Int
   }
 
-
 initModel : Int -> Model
 initModel percent =
   Model percent Nothing
+
+isDragging : Model -> Bool
+isDragging model = Maybe.Extra.isJust model.mouseDownOffset
 
 -- UPDATE
 

@@ -19,7 +19,7 @@ main =
 
 {- might need to change `Array Slider.Model` for a
  `Dict SliderId Slider.Model` as the server *should*
- have some concept of sliderId -} 
+ have some concept of sliderId -}
 type alias Model = { sliders : Array Slider.Model }
 
 numberSliders : Int
@@ -50,7 +50,7 @@ update msg model =
 
     ServerSlidersUpdate sliderValues ->
       -- only update the model of a slider if not Slider.isDragging
-      -- perhaps combine into updatePercentIfNotDragging
+      -- perhaps combine into setValueIfNotDragging
       (model, Cmd.none)
 
 updateSliderModel : Int -> Slider.Msg -> Model -> (Model, Cmd Msg)

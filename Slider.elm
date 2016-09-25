@@ -1,4 +1,4 @@
-module Slider exposing (Model, Msg, updateMain, renderSlider, trackWidth, initModel, subscriptions)
+module Slider exposing (Model, Msg, updateMain, renderSlider, trackWidth, initModel, subscriptions, setValueIfNotDragging, getValue)
 
 import Html exposing (..)
 import Html.App as App
@@ -35,6 +35,20 @@ initModel percent =
 
 isDragging : Model -> Bool
 isDragging model = Maybe.Extra.isJust model.mouseDownOffset
+
+setValueIfNotDragging : Int -> Model -> Model
+setValueIfNotDragging newValue model =
+  let
+    normalisedValue = (round ((toFloat newValue) * 0.91)) - 2
+  in
+    if isDragging model then
+      model
+    else
+      { model | percentValue = normalisedValue }
+
+getValue : Model -> Int
+getValue model =
+  (round ((toFloat model.percentValue) * 1.099)) + 2
 
 -- UPDATE
 

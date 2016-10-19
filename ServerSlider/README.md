@@ -25,6 +25,7 @@ To install:
 First install `Zewo/WebSocketServer`:
 ```bash
 $ git clone https://github.com/Zewo/WebSocketServer.git
+$ cd WebSocketServer
 $ swift package generate-xcodeproj
 ```
 
@@ -33,5 +34,6 @@ open and build `./WebSocketServer.xcodeproj`
 Then install `Zewo/HTTPServer`:
 ```bash
 $ git clone https://github.com/Zewo/HTTPServer.git
+$ cd HTTPServer
 $ swift package generate-xcodeproj
 ```

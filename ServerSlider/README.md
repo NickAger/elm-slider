@@ -14,9 +14,24 @@
 |[Zewo/WebSocket](https://github.com/Zewo/WebSocket)|Swift 3|Worth another look? This module contains no networking. To create a WebSocket Server, see WebSocketServer. To create a WebSocket Client, see WebSocketClient.|
 |[PerfectExample-WebSocketsServer](https://github.com/PerfectlySoft/PerfectExample-WebSocketsServer)|Swift 2|Large webserver that seemed overkill|
 
-
-
 ## Next Steps
 * [Zewo/WebSocket](https://github.com/Zewo/WebSocket)
 * [SwiftSockets](http://www.alwaysrightinstitute.com/SwiftSockets/)
 
+## Using [Zewo/WebSocket](https://github.com/Zewo/WebSocket)
+
+To install:
+
+First install `Zewo/WebSocketServer`:
+```bash
+$ git clone https://github.com/Zewo/WebSocketServer.git
+$ swift package generate-xcodeproj
+```
+
+open and build `./WebSocketServer.xcodeproj`
+
+Then install `Zewo/HTTPServer`:
+```bash
+$ git clone https://github.com/Zewo/HTTPServer.git
+$ swift package generate-xcodeproj
+```

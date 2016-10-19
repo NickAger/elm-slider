@@ -1,0 +1,5 @@
+framework module COpenSSL {
+    umbrella header "/Users/nickager/Documents/programming/elm/elm-slider/ServerSlider/HTTPServer/Packages/COpenSSL-0.14.0/Sources/include/COpenSSL.h"
+    link framework "COpenSSL"
+    export *
+}

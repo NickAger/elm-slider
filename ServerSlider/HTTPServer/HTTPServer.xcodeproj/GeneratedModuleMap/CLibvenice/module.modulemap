@@ -1,0 +1,5 @@
+framework module CLibvenice {
+    umbrella "/Users/nickager/Documents/programming/elm/elm-slider/ServerSlider/HTTPServer/Packages/CLibvenice-0.14.0/Sources/include"
+    link framework "CLibvenice"
+    export *
+}

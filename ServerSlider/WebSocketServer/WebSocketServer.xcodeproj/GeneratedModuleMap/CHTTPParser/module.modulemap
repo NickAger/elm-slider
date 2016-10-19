@@ -1,0 +1,5 @@
+framework module CHTTPParser {
+    umbrella "/Users/nickager/Documents/programming/elm/elm-slider/ServerSlider/WebSocketServer/Packages/CHTTPParser-0.14.0/Sources/include"
+    link framework "CHTTPParser"
+    export *
+}

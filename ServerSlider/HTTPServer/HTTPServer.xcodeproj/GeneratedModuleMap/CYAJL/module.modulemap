@@ -1,0 +1,5 @@
+framework module CYAJL {
+    umbrella "/Users/nickager/Documents/programming/elm/elm-slider/ServerSlider/HTTPServer/Packages/CYAJL-0.14.0/Sources/CYAJL/include"
+    link framework "CYAJL"
+    export *
+}

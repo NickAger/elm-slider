@@ -151,6 +151,76 @@
 			remoteGlobalIDString = "_____Product_HTTPServerTests";
 			remoteInfo = HTTPServerTests;
 		};
+		844AE7D11DB787EB00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE7C41DB787EB00E1F8B0 /* WebSocketServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_CPOSIX";
+			remoteInfo = CPOSIX;
+		};
+		844AE7D31DB787EB00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE7C41DB787EB00E1F8B0 /* WebSocketServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_POSIX";
+			remoteInfo = POSIX;
+		};
+		844AE7D51DB787EB00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE7C41DB787EB00E1F8B0 /* WebSocketServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_Reflection";
+			remoteInfo = Reflection;
+		};
+		844AE7D71DB787EB00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE7C41DB787EB00E1F8B0 /* WebSocketServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_CYAJL";
+			remoteInfo = CYAJL;
+		};
+		844AE7D91DB787EB00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE7C41DB787EB00E1F8B0 /* WebSocketServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_Axis";
+			remoteInfo = Axis;
+		};
+		844AE7DB1DB787EB00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE7C41DB787EB00E1F8B0 /* WebSocketServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_WebSocket";
+			remoteInfo = WebSocket;
+		};
+		844AE7DD1DB787EB00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE7C41DB787EB00E1F8B0 /* WebSocketServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_CHTTPParser";
+			remoteInfo = CHTTPParser;
+		};
+		844AE7DF1DB787EB00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE7C41DB787EB00E1F8B0 /* WebSocketServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_HTTP";
+			remoteInfo = HTTP;
+		};
+		844AE7E11DB787EB00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE7C41DB787EB00E1F8B0 /* WebSocketServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_WebSocketServer";
+			remoteInfo = WebSocketServer;
+		};
+		844AE7E31DB787EB00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE7C41DB787EB00E1F8B0 /* WebSocketServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_WebSocketServerTests";
+			remoteInfo = WebSocketServerTests;
+		};
 		84E830691DB75CF800C32466 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84E8304F1DB75CF800C32466 /* Project object */;
@@ -169,6 +239,7 @@
 
 /* Begin PBXFileReference section */
 		844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HTTPServer.xcodeproj; path = HTTPServer/HTTPServer.xcodeproj; sourceTree = "<group>"; };
+		844AE7C41DB787EB00E1F8B0 /* WebSocketServer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WebSocketServer.xcodeproj; path = WebSocketServer/WebSocketServer.xcodeproj; sourceTree = "<group>"; };
 		84E830571DB75CF800C32466 /* ServerSlider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServerSlider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E8305A1DB75CF800C32466 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84E8305C1DB75CF800C32466 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -248,6 +319,23 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		844AE7C51DB787EB00E1F8B0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				844AE7D21DB787EB00E1F8B0 /* CPOSIX.framework */,
+				844AE7D41DB787EB00E1F8B0 /* POSIX.framework */,
+				844AE7D61DB787EB00E1F8B0 /* Reflection.framework */,
+				844AE7D81DB787EB00E1F8B0 /* CYAJL.framework */,
+				844AE7DA1DB787EB00E1F8B0 /* Axis.framework */,
+				844AE7DC1DB787EB00E1F8B0 /* WebSocket.framework */,
+				844AE7DE1DB787EB00E1F8B0 /* CHTTPParser.framework */,
+				844AE7E01DB787EB00E1F8B0 /* HTTP.framework */,
+				844AE7E21DB787EB00E1F8B0 /* WebSocketServer.framework */,
+				844AE7E41DB787EB00E1F8B0 /* WebSocketServerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		84E8304E1DB75CF800C32466 = {
 			isa = PBXGroup;
 			children = (
@@ -255,6 +343,7 @@
 				84E8306B1DB75CF800C32466 /* ServerSliderTests */,
 				84E830761DB75CF800C32466 /* ServerSliderUITests */,
 				84E830581DB75CF800C32466 /* Products */,
+				844AE7C41DB787EB00E1F8B0 /* WebSocketServer.xcodeproj */,
 				844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */,
 			);
 			sourceTree = "<group>";
@@ -397,6 +486,10 @@
 					ProductGroup = 844AE76F1DB786A900E1F8B0 /* Products */;
 					ProjectRef = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
 				},
+				{
+					ProductGroup = 844AE7C51DB787EB00E1F8B0 /* Products */;
+					ProjectRef = 844AE7C41DB787EB00E1F8B0 /* WebSocketServer.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -525,6 +618,76 @@
 			fileType = file;
 			path = HTTPServerTests.xctest;
 			remoteRef = 844AE7A21DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7D21DB787EB00E1F8B0 /* CPOSIX.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CPOSIX.framework;
+			remoteRef = 844AE7D11DB787EB00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7D41DB787EB00E1F8B0 /* POSIX.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = POSIX.framework;
+			remoteRef = 844AE7D31DB787EB00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7D61DB787EB00E1F8B0 /* Reflection.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Reflection.framework;
+			remoteRef = 844AE7D51DB787EB00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7D81DB787EB00E1F8B0 /* CYAJL.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CYAJL.framework;
+			remoteRef = 844AE7D71DB787EB00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7DA1DB787EB00E1F8B0 /* Axis.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Axis.framework;
+			remoteRef = 844AE7D91DB787EB00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7DC1DB787EB00E1F8B0 /* WebSocket.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WebSocket.framework;
+			remoteRef = 844AE7DB1DB787EB00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7DE1DB787EB00E1F8B0 /* CHTTPParser.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CHTTPParser.framework;
+			remoteRef = 844AE7DD1DB787EB00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7E01DB787EB00E1F8B0 /* HTTP.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = HTTP.framework;
+			remoteRef = 844AE7DF1DB787EB00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7E21DB787EB00E1F8B0 /* WebSocketServer.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WebSocketServer.framework;
+			remoteRef = 844AE7E11DB787EB00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7E41DB787EB00E1F8B0 /* WebSocketServerTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = file;
+			path = WebSocketServerTests.xctest;
+			remoteRef = 844AE7E31DB787EB00E1F8B0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

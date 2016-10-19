@@ -33,7 +33,7 @@ class ViewController: NSViewController {
 
 // MARK: - web socket server
 //extension ViewController {
-//    func startWebSocketServer() {
+//    func startWebServer() {
 //        let port = 8080
 //        let log = LogMiddleware()
 //        

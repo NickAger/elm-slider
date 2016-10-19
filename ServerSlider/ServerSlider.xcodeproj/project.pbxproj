@@ -7,6 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		844AE7B41DB786F500E1F8B0 /* Axis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE78B1DB786AA00E1F8B0 /* Axis.framework */; };
+		844AE7B51DB786F500E1F8B0 /* CHTTPParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE7911DB786AA00E1F8B0 /* CHTTPParser.framework */; };
+		844AE7B61DB786F500E1F8B0 /* CLibvenice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE78D1DB786AA00E1F8B0 /* CLibvenice.framework */; };
+		844AE7B71DB786F500E1F8B0 /* COpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE79B1DB786AA00E1F8B0 /* COpenSSL.framework */; };
+		844AE7B81DB786F500E1F8B0 /* CPOSIX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE7831DB786AA00E1F8B0 /* CPOSIX.framework */; };
+		844AE7B91DB786F500E1F8B0 /* CYAJL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE7891DB786AA00E1F8B0 /* CYAJL.framework */; };
+		844AE7BA1DB786F500E1F8B0 /* File.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE7951DB786AA00E1F8B0 /* File.framework */; };
+		844AE7BB1DB786F500E1F8B0 /* HTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE7931DB786AA00E1F8B0 /* HTTP.framework */; };
+		844AE7BC1DB786F500E1F8B0 /* HTTPFile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE7971DB786AA00E1F8B0 /* HTTPFile.framework */; };
+		844AE7BD1DB786F500E1F8B0 /* HTTPServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE7A11DB786AA00E1F8B0 /* HTTPServer.framework */; };
+		844AE7BE1DB786F500E1F8B0 /* IP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE7991DB786AA00E1F8B0 /* IP.framework */; };
+		844AE7BF1DB786F500E1F8B0 /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE79D1DB786AA00E1F8B0 /* OpenSSL.framework */; };
+		844AE7C01DB786F500E1F8B0 /* POSIX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE7851DB786AA00E1F8B0 /* POSIX.framework */; };
+		844AE7C11DB786F500E1F8B0 /* Reflection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE7871DB786AA00E1F8B0 /* Reflection.framework */; };
+		844AE7C21DB786F500E1F8B0 /* TCP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE79F1DB786AA00E1F8B0 /* TCP.framework */; };
+		844AE7C31DB786F500E1F8B0 /* Venice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE78F1DB786AA00E1F8B0 /* Venice.framework */; };
 		84E8305B1DB75CF800C32466 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8305A1DB75CF800C32466 /* AppDelegate.swift */; };
 		84E8305D1DB75CF800C32466 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8305C1DB75CF800C32466 /* ViewController.swift */; };
 		84E8305F1DB75CF800C32466 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E8305E1DB75CF800C32466 /* Assets.xcassets */; };
@@ -16,6 +32,125 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		844AE7821DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_CPOSIX";
+			remoteInfo = CPOSIX;
+		};
+		844AE7841DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_POSIX";
+			remoteInfo = POSIX;
+		};
+		844AE7861DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_Reflection";
+			remoteInfo = Reflection;
+		};
+		844AE7881DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_CYAJL";
+			remoteInfo = CYAJL;
+		};
+		844AE78A1DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_Axis";
+			remoteInfo = Axis;
+		};
+		844AE78C1DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_CLibvenice";
+			remoteInfo = CLibvenice;
+		};
+		844AE78E1DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_Venice";
+			remoteInfo = Venice;
+		};
+		844AE7901DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_CHTTPParser";
+			remoteInfo = CHTTPParser;
+		};
+		844AE7921DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_HTTP";
+			remoteInfo = HTTP;
+		};
+		844AE7941DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_File";
+			remoteInfo = File;
+		};
+		844AE7961DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_HTTPFile";
+			remoteInfo = HTTPFile;
+		};
+		844AE7981DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_IP";
+			remoteInfo = IP;
+		};
+		844AE79A1DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_COpenSSL";
+			remoteInfo = COpenSSL;
+		};
+		844AE79C1DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_OpenSSL";
+			remoteInfo = OpenSSL;
+		};
+		844AE79E1DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_TCP";
+			remoteInfo = TCP;
+		};
+		844AE7A01DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_HTTPServer";
+			remoteInfo = HTTPServer;
+		};
+		844AE7A21DB786AA00E1F8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = "_____Product_HTTPServerTests";
+			remoteInfo = HTTPServerTests;
+		};
 		84E830691DB75CF800C32466 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84E8304F1DB75CF800C32466 /* Project object */;
@@ -33,6 +168,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HTTPServer.xcodeproj; path = HTTPServer/HTTPServer.xcodeproj; sourceTree = "<group>"; };
 		84E830571DB75CF800C32466 /* ServerSlider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ServerSlider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E8305A1DB75CF800C32466 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84E8305C1DB75CF800C32466 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -52,6 +188,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				844AE7B41DB786F500E1F8B0 /* Axis.framework in Frameworks */,
+				844AE7B51DB786F500E1F8B0 /* CHTTPParser.framework in Frameworks */,
+				844AE7B61DB786F500E1F8B0 /* CLibvenice.framework in Frameworks */,
+				844AE7B71DB786F500E1F8B0 /* COpenSSL.framework in Frameworks */,
+				844AE7B81DB786F500E1F8B0 /* CPOSIX.framework in Frameworks */,
+				844AE7B91DB786F500E1F8B0 /* CYAJL.framework in Frameworks */,
+				844AE7BA1DB786F500E1F8B0 /* File.framework in Frameworks */,
+				844AE7BB1DB786F500E1F8B0 /* HTTP.framework in Frameworks */,
+				844AE7BC1DB786F500E1F8B0 /* HTTPFile.framework in Frameworks */,
+				844AE7BD1DB786F500E1F8B0 /* HTTPServer.framework in Frameworks */,
+				844AE7BE1DB786F500E1F8B0 /* IP.framework in Frameworks */,
+				844AE7BF1DB786F500E1F8B0 /* OpenSSL.framework in Frameworks */,
+				844AE7C01DB786F500E1F8B0 /* POSIX.framework in Frameworks */,
+				844AE7C11DB786F500E1F8B0 /* Reflection.framework in Frameworks */,
+				844AE7C21DB786F500E1F8B0 /* TCP.framework in Frameworks */,
+				844AE7C31DB786F500E1F8B0 /* Venice.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +224,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		844AE76F1DB786A900E1F8B0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				844AE7831DB786AA00E1F8B0 /* CPOSIX.framework */,
+				844AE7851DB786AA00E1F8B0 /* POSIX.framework */,
+				844AE7871DB786AA00E1F8B0 /* Reflection.framework */,
+				844AE7891DB786AA00E1F8B0 /* CYAJL.framework */,
+				844AE78B1DB786AA00E1F8B0 /* Axis.framework */,
+				844AE78D1DB786AA00E1F8B0 /* CLibvenice.framework */,
+				844AE78F1DB786AA00E1F8B0 /* Venice.framework */,
+				844AE7911DB786AA00E1F8B0 /* CHTTPParser.framework */,
+				844AE7931DB786AA00E1F8B0 /* HTTP.framework */,
+				844AE7951DB786AA00E1F8B0 /* File.framework */,
+				844AE7971DB786AA00E1F8B0 /* HTTPFile.framework */,
+				844AE7991DB786AA00E1F8B0 /* IP.framework */,
+				844AE79B1DB786AA00E1F8B0 /* COpenSSL.framework */,
+				844AE79D1DB786AA00E1F8B0 /* OpenSSL.framework */,
+				844AE79F1DB786AA00E1F8B0 /* TCP.framework */,
+				844AE7A11DB786AA00E1F8B0 /* HTTPServer.framework */,
+				844AE7A31DB786AA00E1F8B0 /* HTTPServerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		84E8304E1DB75CF800C32466 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +255,7 @@
 				84E8306B1DB75CF800C32466 /* ServerSliderTests */,
 				84E830761DB75CF800C32466 /* ServerSliderUITests */,
 				84E830581DB75CF800C32466 /* Products */,
+				844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -215,6 +392,12 @@
 			mainGroup = 84E8304E1DB75CF800C32466;
 			productRefGroup = 84E830581DB75CF800C32466 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 844AE76F1DB786A900E1F8B0 /* Products */;
+					ProjectRef = 844AE76E1DB786A900E1F8B0 /* HTTPServer.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				84E830561DB75CF800C32466 /* ServerSlider */,
@@ -223,6 +406,128 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		844AE7831DB786AA00E1F8B0 /* CPOSIX.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CPOSIX.framework;
+			remoteRef = 844AE7821DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7851DB786AA00E1F8B0 /* POSIX.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = POSIX.framework;
+			remoteRef = 844AE7841DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7871DB786AA00E1F8B0 /* Reflection.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Reflection.framework;
+			remoteRef = 844AE7861DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7891DB786AA00E1F8B0 /* CYAJL.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CYAJL.framework;
+			remoteRef = 844AE7881DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE78B1DB786AA00E1F8B0 /* Axis.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Axis.framework;
+			remoteRef = 844AE78A1DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE78D1DB786AA00E1F8B0 /* CLibvenice.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CLibvenice.framework;
+			remoteRef = 844AE78C1DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE78F1DB786AA00E1F8B0 /* Venice.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Venice.framework;
+			remoteRef = 844AE78E1DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7911DB786AA00E1F8B0 /* CHTTPParser.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CHTTPParser.framework;
+			remoteRef = 844AE7901DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7931DB786AA00E1F8B0 /* HTTP.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = HTTP.framework;
+			remoteRef = 844AE7921DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7951DB786AA00E1F8B0 /* File.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = File.framework;
+			remoteRef = 844AE7941DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7971DB786AA00E1F8B0 /* HTTPFile.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = HTTPFile.framework;
+			remoteRef = 844AE7961DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7991DB786AA00E1F8B0 /* IP.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = IP.framework;
+			remoteRef = 844AE7981DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE79B1DB786AA00E1F8B0 /* COpenSSL.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = COpenSSL.framework;
+			remoteRef = 844AE79A1DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE79D1DB786AA00E1F8B0 /* OpenSSL.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OpenSSL.framework;
+			remoteRef = 844AE79C1DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE79F1DB786AA00E1F8B0 /* TCP.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = TCP.framework;
+			remoteRef = 844AE79E1DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7A11DB786AA00E1F8B0 /* HTTPServer.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = HTTPServer.framework;
+			remoteRef = 844AE7A01DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		844AE7A31DB786AA00E1F8B0 /* HTTPServerTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = file;
+			path = HTTPServerTests.xctest;
+			remoteRef = 844AE7A21DB786AA00E1F8B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		84E830551DB75CF800C32466 /* Resources */ = {
@@ -496,6 +801,7 @@
 				84E8307E1DB75CF800C32466 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		84E8307F1DB75CF800C32466 /* Build configuration list for PBXNativeTarget "ServerSliderTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +810,7 @@
 				84E830811DB75CF800C32466 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		84E830821DB75CF800C32466 /* Build configuration list for PBXNativeTarget "ServerSliderUITests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +819,7 @@
 				84E830841DB75CF800C32466 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

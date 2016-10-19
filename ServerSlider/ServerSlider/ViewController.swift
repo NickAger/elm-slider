@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-//import HTTPServer
+import HTTPServer
 //import WebSocketServer
 
 class ViewController: NSViewController {
@@ -17,7 +17,7 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        startWebSocketServer()
+        startWebServer()
     }
 
     @IBAction func sliderChanged(_ sender: NSSlider) {
@@ -32,25 +32,25 @@ class ViewController: NSViewController {
 }
 
 // MARK: - web socket server
-//extension ViewController {
-//    func startWebServer() {
-//        let port = 8080
-//        let log = LogMiddleware()
-//        
-//        let router = BasicRouter { route in
-//            route.get("/hello2") { request in
-//                return Response(body: "Hello, world!")
-//            }
-//        }
-//        
-//        do {
-//            let server = try Server(port: port, middleware: [log], responder: router)
-//            try server.start()
-//        } catch {
-//            print("Error = \(error)")
-//        }
-//    }
-//}
+extension ViewController {
+    func startWebServer() {
+        let port = 8080
+        let log = LogMiddleware()
+        
+        let router = BasicRouter { route in
+            route.get("/hello") { request in
+                return Response(body: "Hello, world!")
+            }
+        }
+        
+        do {
+            let server = try Server(port: port, middleware: [log], responder: router)
+            try server.start()
+        } catch {
+            print("Error = \(error)")
+        }
+    }
+}
 //
 //
 //// MARK: - more socket server stuff

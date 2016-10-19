@@ -8,7 +8,7 @@
 
 import Cocoa
 import HTTPServer
-//import WebSocketServer
+import WebSocketServer
 
 class ViewController: NSViewController {
 
@@ -17,7 +17,8 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        startWebServer()
+        // startWebServer()
+        startWebSocketServer()
     }
 
     @IBAction func sliderChanged(_ sender: NSSlider) {
@@ -31,7 +32,7 @@ class ViewController: NSViewController {
     }
 }
 
-// MARK: - web socket server
+// MARK: - http server
 extension ViewController {
     func startWebServer() {
         let port = 8080
@@ -51,27 +52,31 @@ extension ViewController {
         }
     }
 }
-//
-//
-//// MARK: - more socket server stuff
-//extension ViewController {
-//    func startWebSocketServer() {
-//        let server = WebSocketServer { req, ws in
-//            print("Connected!")
-//            ws.onText { text in
-//                print("text: \(text)")
-//                try ws.send(text)
-//            }
-//            ws.onClose {(code, reason) in
-//                print("\(code): \(reason)")
-//            }
-//        }
-//        
-//        try Server(responder: server).start()
-//    }
-//    
-//    
-//    func startFromRequest () {
+
+
+// MARK: - web socket server stuff
+extension ViewController {
+    func startWebSocketServer() {
+        let server = WebSocketServer { req, ws in
+            print("Connected!")
+            ws.onText { text in
+                print("text: \(text)")
+                try ws.send(text)
+            }
+            ws.onClose {(code, reason) in
+                print("\(code): \(reason)")
+            }
+        }
+        
+        do {
+            try Server(responder: server).start()
+        } catch {
+            print("Error = \(error)")
+        }
+    }
+    
+    
+//    func startFromRequest () throws {
 //        try Server { request in
 //            return try request.webSocket { req, ws in
 //                print("connected")
@@ -87,4 +92,4 @@ extension ViewController {
 //            }
 //            }.start()
 //    }
-//}
+}

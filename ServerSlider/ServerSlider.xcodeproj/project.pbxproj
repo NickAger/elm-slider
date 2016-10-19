@@ -23,6 +23,8 @@
 		844AE7C11DB786F500E1F8B0 /* Reflection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE7871DB786AA00E1F8B0 /* Reflection.framework */; };
 		844AE7C21DB786F500E1F8B0 /* TCP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE79F1DB786AA00E1F8B0 /* TCP.framework */; };
 		844AE7C31DB786F500E1F8B0 /* Venice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE78F1DB786AA00E1F8B0 /* Venice.framework */; };
+		844AE7EE1DB7885E00E1F8B0 /* WebSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE7DC1DB787EB00E1F8B0 /* WebSocket.framework */; };
+		844AE7EF1DB7885E00E1F8B0 /* WebSocketServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844AE7E21DB787EB00E1F8B0 /* WebSocketServer.framework */; };
 		84E8305B1DB75CF800C32466 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8305A1DB75CF800C32466 /* AppDelegate.swift */; };
 		84E8305D1DB75CF800C32466 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8305C1DB75CF800C32466 /* ViewController.swift */; };
 		84E8305F1DB75CF800C32466 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E8305E1DB75CF800C32466 /* Assets.xcassets */; };
@@ -259,6 +261,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				844AE7EE1DB7885E00E1F8B0 /* WebSocket.framework in Frameworks */,
+				844AE7EF1DB7885E00E1F8B0 /* WebSocketServer.framework in Frameworks */,
 				844AE7B41DB786F500E1F8B0 /* Axis.framework in Frameworks */,
 				844AE7B51DB786F500E1F8B0 /* CHTTPParser.framework in Frameworks */,
 				844AE7B61DB786F500E1F8B0 /* CLibvenice.framework in Frameworks */,

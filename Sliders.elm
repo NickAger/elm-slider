@@ -6,6 +6,7 @@ import Html exposing (..)
 import Html.App as App
 import Array exposing (Array)
 import Json.Decode exposing (..)
+import WebSocket
 
 
 main : Program Never
@@ -54,7 +55,7 @@ initialModel =
 
 
 type Msg
-    = ServerSlidersUpdate (List Int)
+    = ServerUpdate (List Int)
     | SliderMsg Int Slider.Msg
 
 
@@ -64,7 +65,7 @@ update msg model =
         SliderMsg index sliderMsg ->
             updateSliderModel index sliderMsg model
 
-        ServerSlidersUpdate sliderValues ->
+        ServerUpdate sliderValues ->
             let
                 sliders =
                     List.map2 Slider.setValueIfNotDragging sliderValues (Array.toList model.sliders)
@@ -124,8 +125,22 @@ subscriptions model =
     let
         subscriptions =
             Array.indexedMap subscriptionItem model.sliders
+        subscriptionsList = Array.toList subscriptions
+        WebSocket.listen "ws://localhost:8080" NewMessage
     in
-        Sub.batch (Array.toList subscriptions)
+        Sub.batch (subscriptionsList ++ [])
+
+makeServerUpdate : Position -> Msg
+makeDragAt xy =
+    DragAt xy.y
+
+{-
+ServerUpdate
+   subscriptions : Model -> Sub Msg
+   subscriptions model =
+       WebSocket.listen "ws://localhost:8080" NewMessage
+      -- WebSocket.listen "ws://echo.websocket.org" NewMessage
+-}
 
 
 subscriptionItem : Int -> Slider.Model -> Sub Msg

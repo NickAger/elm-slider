@@ -33,13 +33,7 @@ class ViewController: NSViewController {
     @IBAction func sliderChanged(_ sender: NSSlider) {
         let i = sender.tag
         
-        let valueAsString = sender.stringValue
-        let displayString: String
-        if valueAsString.characters.count > 4 {
-            displayString = String(valueAsString.characters.prefix(4))
-        } else {
-            displayString = valueAsString
-        }
+        let displayString = String(sender.intValue)
         sliderLabels[i].stringValue = displayString
         sendUpdateToClient()
     }
@@ -58,19 +52,19 @@ extension ViewController {
     }
     
     func createJson() -> String {
-        let sliderValues = sliders.map { $0.stringValue }
+        let sliderValues = sliders.map { String($0.intValue) }
         
         let values = sliderValues.joined(separator: ", ")
         return "{ \"version\": 1, \"sliders\":[\(values)]}"
     }
     
-    func parseJson(json: [String: Any]) -> [Double]? {
-        return json["sliders"] as? [Double]
+    func parseJson(json: [String: Any]) -> [Int]? {
+        return json["sliders"] as? [Int]
     }
     
-    func updateSliders(values: [Double]) {
+    func updateSliders(values: [Int]) {
         values.enumerated().forEach { (index, value) in
-            sliders[index].doubleValue = value
+            sliders[index].intValue = Int32(value)
         }
     }
 }
@@ -104,7 +98,7 @@ extension ViewController {
         slider.sliderType = .linear
         slider.numberOfTickMarks = 20
         slider.minValue = 0
-        slider.maxValue = 1
+        slider.maxValue = 100
         slider.heightAnchor.constraint(equalToConstant: 400).isActive = true
         slider.target = self
         slider.action = #selector(sliderChanged)

@@ -11,24 +11,105 @@ import HTTPServer
 import WebSocketServer
 
 class ViewController: NSViewController {
-
+    let numberOfSliders = 10
+    var sliderLabels = [NSTextField]()
+    var sliders = [NSSlider]()
+    
+    @IBOutlet var sliderContainerStackView: NSStackView!
     @IBOutlet var sliderNumberLabel: NSTextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addSliders()
 
         // startWebServer()
-        startWebSocketServer()
+        
+        DispatchQueue.global().async {
+            self.startWebSocketServer()
+        }
     }
 
     @IBAction func sliderChanged(_ sender: NSSlider) {
-        sliderNumberLabel.stringValue = "("  + sender.stringValue + ")"
+        let i = sender.tag
+        
+        let valueAsString = sender.stringValue
+        let displayString: String
+        if valueAsString.characters.count > 4 {
+            displayString = String(valueAsString.characters.prefix(4))
+        } else {
+            displayString = valueAsString
+        }
+        sliderLabels[i].stringValue = displayString
+        sendUpdateToClient()
     }
     
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
         }
+    }
+}
+
+// MARK: - JSON handling
+extension ViewController {
+    func sendUpdateToClient() {
+        print(createJson())
+    }
+    
+    func createJson() -> String {
+        let sliderValues = sliders.map { $0.stringValue }
+        
+        let values = sliderValues.joined(separator: ", ")
+        return "{ \"version\": 1, \"sliders\":[\(values)]}"
+    }
+    
+    func parseJson(json: [String: Any]) -> [Double]? {
+        return json["sliders"] as? [Double]
+    }
+    
+    func updateSliders(values: [Double]) {
+        values.enumerated().forEach { (index, value) in
+            sliders[index].doubleValue = value
+        }
+    }
+}
+
+// MARK: - view setup
+extension ViewController {
+    func addSliders() {
+        for i in 0..<(numberOfSliders) {
+            let stackView = NSStackView()
+            stackView.orientation = .vertical
+            
+            let slider = createSlider()
+            slider.tag = i
+            sliders.append(slider)
+            stackView.addArrangedSubview(slider)
+            
+            let sliderLabel = NSTextField()
+            sliderLabel.isEditable = false
+            sliderLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
+            sliderLabels.append(sliderLabel)
+            stackView.addArrangedSubview(sliderLabel)
+            
+            
+            sliderContainerStackView.addArrangedSubview(stackView)
+        }
+    }
+    
+    func createSlider() -> NSSlider {
+        let slider = NSSlider()
+        slider.isVertical = true
+        slider.sliderType = .linear
+        slider.numberOfTickMarks = 20
+        slider.minValue = 0
+        slider.maxValue = 1
+        slider.heightAnchor.constraint(equalToConstant: 400).isActive = true
+        slider.target = self
+        slider.action = #selector(sliderChanged)
+        
+        return slider
     }
 }
 
@@ -64,7 +145,7 @@ extension ViewController {
                 try ws.send(text)
             }
             ws.onClose {(code, reason) in
-                print("\(code): \(reason)")
+                print("onClose - \(code): \(reason)")
             }
         }
         

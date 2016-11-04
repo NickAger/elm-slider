@@ -6,6 +6,7 @@ import Html exposing (..)
 import Html.App as App
 import Array exposing (Array)
 import Json.Decode exposing (..)
+import Json.Encode exposing (..)
 import WebSocket
 
 
@@ -56,6 +57,7 @@ initialModel =
 
 type Msg
     = ServerUpdate (List Int)
+    | ServerUpdateError
     | SliderMsg Int Slider.Msg
 
 
@@ -75,6 +77,10 @@ update msg model =
             in
                 ( updatedModel, Cmd.none )
 
+        ServerUpdateError ->
+            -- nothing todo
+            ( model, Cmd.none )
+
 
 updateSliderModel : Int -> Slider.Msg -> Model -> ( Model, Cmd Msg )
 updateSliderModel index sliderMsg model =
@@ -90,8 +96,14 @@ updateSliderModel index sliderMsg model =
 
         updatedModel =
             Maybe.withDefault model updatedModel'
+
+        allValues =
+            Array.map Slider.getValue updatedModel.sliders
+
+        json =
+            slidersJsonString (Array.toList allValues)
     in
-        ( updatedModel, Cmd.none )
+        ( updatedModel, WebSocket.send "ws://localhost:8080" json )
 
 
 
@@ -125,24 +137,43 @@ subscriptions model =
     let
         subscriptions =
             Array.indexedMap subscriptionItem model.sliders
-        subscriptionsList = Array.toList subscriptions
-        WebSocket.listen "ws://localhost:8080" NewMessage
+
+        subscriptionsList =
+            Array.toList subscriptions
+
+        serverUpdate =
+            WebSocket.listen "ws://localhost:8080" makeServerUpdate
     in
-        Sub.batch (subscriptionsList ++ [])
+        Sub.batch (serverUpdate :: subscriptionsList)
 
-makeServerUpdate : Position -> Msg
-makeDragAt xy =
-    DragAt xy.y
 
-{-
-ServerUpdate
-   subscriptions : Model -> Sub Msg
-   subscriptions model =
-       WebSocket.listen "ws://localhost:8080" NewMessage
-      -- WebSocket.listen "ws://echo.websocket.org" NewMessage
--}
+makeServerUpdate : String -> Msg
+makeServerUpdate json =
+    let
+        decodeResult =
+            decodeString ("sliders" := (Json.Decode.list Json.Decode.int)) json
+    in
+        case decodeResult of
+            Result.Ok values ->
+                ServerUpdate values
+
+            Result.Err _ ->
+                ServerUpdateError
 
 
 subscriptionItem : Int -> Slider.Model -> Sub Msg
 subscriptionItem index aSliderModel =
     Sub.map (SliderMsg index) (Slider.subscriptions aSliderModel)
+
+
+slidersJson : List Int -> Json.Encode.Value
+slidersJson sliderValues =
+    Json.Encode.object
+        [ ( "version", Json.Encode.int 1 )
+        , ( "sliders", (Json.Encode.list (List.map Json.Encode.int sliderValues)) )
+        ]
+
+
+slidersJsonString : List Int -> String
+slidersJsonString sliderValues =
+    encode 0 (slidersJson sliderValues)

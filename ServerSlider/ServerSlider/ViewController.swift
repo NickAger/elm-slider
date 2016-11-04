@@ -14,6 +14,7 @@ class ViewController: NSViewController {
     let numberOfSliders = 10
     var sliderLabels = [NSTextField]()
     var sliders = [NSSlider]()
+    var websocket: WebSocket?
     
     @IBOutlet var sliderContainerStackView: NSStackView!
     @IBOutlet var sliderNumberLabel: NSTextField!
@@ -48,7 +49,16 @@ class ViewController: NSViewController {
 // MARK: - JSON handling
 extension ViewController {
     func sendUpdateToClient() {
-        print(createJson())
+        let json = createJson()
+        if let ws = websocket {
+            DispatchQueue.global().async {
+                do {
+                    try ws.send(json)
+                } catch {
+                    print("Error sending json = \(error)")
+                }
+            }
+        }
     }
     
     func createJson() -> String {
@@ -58,13 +68,10 @@ extension ViewController {
         return "{ \"version\": 1, \"sliders\":[\(values)]}"
     }
     
-    func parseJson(json: [String: Any]) -> [Int]? {
-        return json["sliders"] as? [Int]
-    }
-    
     func updateSliders(values: [Int]) {
         values.enumerated().forEach { (index, value) in
             sliders[index].intValue = Int32(value)
+            sliderLabels[index].stringValue = String(value)
         }
     }
 }
@@ -134,9 +141,17 @@ extension ViewController {
     func startWebSocketServer() {
         let server = WebSocketServer { req, ws in
             print("Connected!")
+            self.websocket = ws
             ws.onText { text in
-                print("text: \(text)")
-                try ws.send(text)
+                guard let data = text.data(using: .utf8) else {
+                    return
+                }
+                guard let json = try? JSONSerialization.jsonObject(with: data, options: []), let jsonDict = json as? [String : Any], let sliders = jsonDict["sliders"] as? [Int] else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.updateSliders(values: sliders)
+                }
             }
             ws.onClose {(code, reason) in
                 print("onClose - \(code): \(reason)")

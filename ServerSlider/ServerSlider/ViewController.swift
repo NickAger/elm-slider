@@ -23,8 +23,6 @@ class ViewController: NSViewController {
         super.viewDidLoad()
         
         addSliders()
-
-        // startWebServer()
         
         DispatchQueue.global().async {
             self.startWebSocketServer()
@@ -37,12 +35,6 @@ class ViewController: NSViewController {
         let displayString = String(sender.intValue)
         sliderLabels[i].stringValue = displayString
         sendUpdateToClient()
-    }
-    
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
     }
 }
 
@@ -164,22 +156,4 @@ extension ViewController {
             print("Error = \(error)")
         }
     }
-    
-    
-//    func startFromRequest () throws {
-//        try Server { request in
-//            return try request.webSocket { req, ws in
-//                print("connected")
-//                
-//                ws.onBinary { data in
-//                    print("data: \(data)")
-//                    try ws.send(data)
-//                }
-//                ws.onText { text in
-//                    print("data: \(text)")
-//                    try ws.send(text)
-//                }
-//            }
-//            }.start()
-//    }
 }

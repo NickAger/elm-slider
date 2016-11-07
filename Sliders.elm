@@ -98,7 +98,7 @@ updateSliderModel index sliderMsg model =
                 |> Array.toList
                 |> slidersJsonString
     in
-        ( updatedModel, WebSocket.send "ws://localhost:8080" json )
+        ( updatedModel, WebSocket.send websocketAddress json )
 
 
 
@@ -137,7 +137,7 @@ subscriptions model =
             Array.toList subscriptions
 
         serverUpdate =
-            WebSocket.listen "ws://localhost:8080" makeServerUpdate
+            WebSocket.listen websocketAddress makeServerUpdate
     in
         Sub.batch (serverUpdate :: subscriptionsList)
 
@@ -182,3 +182,8 @@ topY =
 startX : Int
 startX =
     10
+
+
+websocketAddress : String
+websocketAddress =
+    "ws://localhost:8080"

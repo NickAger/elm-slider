@@ -9578,6 +9578,9 @@ var _user$project$Slider$main = {
 		})
 };
 
+var _user$project$Sliders$websocketAddress = 'ws://localhost:8080';
+var _user$project$Sliders$startX = 10;
+var _user$project$Sliders$topY = 10;
 var _user$project$Sliders$slidersJson = function (sliderValues) {
 	return _elm_lang$core$Json_Encode$object(
 		_elm_lang$core$Native_List.fromArray(
@@ -9603,31 +9606,31 @@ var _user$project$Sliders$slidersJsonString = function (sliderValues) {
 };
 var _user$project$Sliders$updateSliderModel = F3(
 	function (index, sliderMsg, model) {
-		var aModel = A2(_elm_lang$core$Array$get, index, model.sliders);
-		var updatedSliderModel = A2(
-			_elm_lang$core$Maybe$map,
-			function (sliderModel) {
-				return A3(_user$project$Slider$updateMain, sliderMsg, sliderModel, 10);
-			},
-			aModel);
-		var updatedModel$ = A2(
-			_elm_lang$core$Maybe$map,
-			function (sliderModel) {
-				return _elm_lang$core$Native_Utils.update(
-					model,
-					{
-						sliders: A3(_elm_lang$core$Array$set, index, sliderModel, model.sliders)
-					});
-			},
-			updatedSliderModel);
-		var updatedModel = A2(_elm_lang$core$Maybe$withDefault, model, updatedModel$);
-		var allValues = A2(_elm_lang$core$Array$map, _user$project$Slider$getValue, updatedModel.sliders);
+		var updatedModel = A2(
+			_elm_lang$core$Maybe$withDefault,
+			model,
+			A2(
+				_elm_lang$core$Maybe$map,
+				function (sliderModel) {
+					return _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							sliders: A3(_elm_lang$core$Array$set, index, sliderModel, model.sliders)
+						});
+				},
+				A2(
+					_elm_lang$core$Maybe$map,
+					function (sliderModel) {
+						return A3(_user$project$Slider$updateMain, sliderMsg, sliderModel, _user$project$Sliders$topY);
+					},
+					A2(_elm_lang$core$Array$get, index, model.sliders))));
 		var json = _user$project$Sliders$slidersJsonString(
-			_elm_lang$core$Array$toList(allValues));
+			_elm_lang$core$Array$toList(
+				A2(_elm_lang$core$Array$map, _user$project$Slider$getValue, updatedModel.sliders)));
 		return {
 			ctor: '_Tuple2',
 			_0: updatedModel,
-			_1: A2(_elm_lang$websocket$WebSocket$send, 'ws://localhost:8080', json)
+			_1: A2(_elm_lang$websocket$WebSocket$send, _user$project$Sliders$websocketAddress, json)
 		};
 	});
 var _user$project$Sliders$update = F2(
@@ -9670,7 +9673,7 @@ var _user$project$Sliders$SliderMsg = F2(
 	});
 var _user$project$Sliders$sliderView = F2(
 	function (index, aSliderModel) {
-		var position = A2(_elm_lang$mouse$Mouse$Position, 10 + (_user$project$Slider$trackWidth * index), 10);
+		var position = A2(_elm_lang$mouse$Mouse$Position, _user$project$Sliders$startX + (_user$project$Slider$trackWidth * index), _user$project$Sliders$topY);
 		return A2(
 			_elm_lang$html$Html_App$map,
 			_user$project$Sliders$SliderMsg(index),
@@ -9711,7 +9714,7 @@ var _user$project$Sliders$makeServerUpdate = function (json) {
 	}
 };
 var _user$project$Sliders$subscriptions = function (model) {
-	var serverUpdate = A2(_elm_lang$websocket$WebSocket$listen, 'ws://localhost:8080', _user$project$Sliders$makeServerUpdate);
+	var serverUpdate = A2(_elm_lang$websocket$WebSocket$listen, _user$project$Sliders$websocketAddress, _user$project$Sliders$makeServerUpdate);
 	var subscriptions = A2(_elm_lang$core$Array$indexedMap, _user$project$Sliders$subscriptionItem, model.sliders);
 	var subscriptionsList = _elm_lang$core$Array$toList(subscriptions);
 	return _elm_lang$core$Platform_Sub$batch(

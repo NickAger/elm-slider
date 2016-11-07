@@ -70,7 +70,8 @@ update msg model =
         ServerUpdate sliderValues ->
             let
                 sliders =
-                    List.map2 Slider.setValueIfNotDragging sliderValues (Array.toList model.sliders)
+                    Array.toList model.sliders
+                        |> List.map2 Slider.setValueIfNotDragging sliderValues
 
                 updatedModel =
                     { model | sliders = Array.fromList sliders }
@@ -85,23 +86,17 @@ update msg model =
 updateSliderModel : Int -> Slider.Msg -> Model -> ( Model, Cmd Msg )
 updateSliderModel index sliderMsg model =
     let
-        aModel =
-            Array.get index model.sliders
-
-        updatedSliderModel =
-            Maybe.map (\sliderModel -> Slider.updateMain sliderMsg sliderModel 10) aModel
-
-        updatedModel' =
-            Maybe.map (\sliderModel -> { model | sliders = (Array.set index sliderModel model.sliders) }) updatedSliderModel
-
         updatedModel =
-            Maybe.withDefault model updatedModel'
-
-        allValues =
-            Array.map Slider.getValue updatedModel.sliders
+            Array.get index model.sliders
+                |> Maybe.map (\sliderModel -> Slider.updateMain sliderMsg sliderModel topY)
+                |> Maybe.map (\sliderModel -> { model | sliders = (Array.set index sliderModel model.sliders) })
+                |> Maybe.withDefault model
 
         json =
-            slidersJsonString (Array.toList allValues)
+            updatedModel.sliders
+                |> Array.map Slider.getValue
+                |> Array.toList
+                |> slidersJsonString
     in
         ( updatedModel, WebSocket.send "ws://localhost:8080" json )
 
@@ -123,7 +118,7 @@ sliderView : Int -> Slider.Model -> Html Msg
 sliderView index aSliderModel =
     let
         position =
-            Position (10 + (Slider.trackWidth * index)) 10
+            Position (startX + (Slider.trackWidth * index)) topY
     in
         App.map (SliderMsg index) (Slider.renderSlider position aSliderModel)
 
@@ -177,3 +172,13 @@ slidersJson sliderValues =
 slidersJsonString : List Int -> String
 slidersJsonString sliderValues =
     encode 0 (slidersJson sliderValues)
+
+
+topY : Int
+topY =
+    10
+
+
+startX : Int
+startX =
+    10

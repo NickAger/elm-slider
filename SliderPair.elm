@@ -3,12 +3,11 @@ module SliderPair exposing (..)
 import Slider
 import Mouse exposing (Position)
 import Html exposing (..)
-import Html.App as App
 
 
-main : Program Never
+main : Program Never Model Msg
 main =
-    App.program
+    Html.program
         { init = init
         , view = view
         , update = update
@@ -65,8 +64,8 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ App.map Slider1 (Slider.renderSlider (Position 10 10) model.slider1)
-        , App.map Slider2 (Slider.renderSlider (Position 114 10) model.slider2)
+        [ Html.map Slider1 (Slider.renderSlider (Position 10 10) model.slider1)
+        , Html.map Slider2 (Slider.renderSlider (Position 114 10) model.slider2)
         ]
 
 

@@ -3,16 +3,15 @@ module Sliders exposing (..)
 import Slider
 import Mouse exposing (Position)
 import Html exposing (..)
-import Html.App as App
 import Array exposing (Array)
-import Json.Decode exposing (..)
-import Json.Encode exposing (..)
+import Json.Decode as Decode
+import Json.Encode as Encode
 import WebSocket
 
 
-main : Program Never
+main : Program Never Model Msg
 main =
-    App.program
+    Html.program
         { init = init
         , view = view
         , update = update
@@ -120,7 +119,7 @@ sliderView index aSliderModel =
         position =
             Position (startX + (Slider.trackWidth * index)) topY
     in
-        App.map (SliderMsg index) (Slider.renderSlider position aSliderModel)
+        Html.map (SliderMsg index) (Slider.renderSlider position aSliderModel)
 
 
 
@@ -146,7 +145,7 @@ makeServerUpdate : String -> Msg
 makeServerUpdate json =
     let
         decodeResult =
-            decodeString ("sliders" := (Json.Decode.list Json.Decode.int)) json
+            Decode.decodeString (Decode.field "sliders" (Decode.list Decode.int)) json
     in
         case decodeResult of
             Result.Ok values ->
@@ -161,17 +160,17 @@ subscriptionItem index aSliderModel =
     Sub.map (SliderMsg index) (Slider.subscriptions aSliderModel)
 
 
-slidersJson : List Int -> Json.Encode.Value
+slidersJson : List Int -> Encode.Value
 slidersJson sliderValues =
-    Json.Encode.object
-        [ ( "version", Json.Encode.int 1 )
-        , ( "sliders", (Json.Encode.list (List.map Json.Encode.int sliderValues)) )
+    Encode.object
+        [ ( "version", Encode.int 1 )
+        , ( "sliders", (Encode.list (List.map Encode.int sliderValues)) )
         ]
 
 
 slidersJsonString : List Int -> String
 slidersJsonString sliderValues =
-    encode 0 (slidersJson sliderValues)
+    Encode.encode 0 (slidersJson sliderValues)
 
 
 topY : Int

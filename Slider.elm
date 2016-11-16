@@ -1,17 +1,15 @@
 module Slider exposing (Model, Msg, updateMain, renderSlider, trackWidth, initModel, subscriptions, setValueIfNotDragging, getValue)
 
 import Html exposing (..)
-import Html.App as App
 import Html.Attributes exposing (..)
 import Html.Events exposing (on)
-import Json.Decode as Json
+import Json.Decode as Decode
 import Mouse exposing (Position)
-import Maybe.Extra
 
 
-main : Program Never
+main : Program Never Model Msg
 main =
-    App.program
+    Html.program
         { init = ( (initModel 50), Cmd.none )
         , view = view
         , update = update
@@ -42,7 +40,12 @@ initModel percent =
 
 isDragging : Model -> Bool
 isDragging model =
-    Maybe.Extra.isJust model.mouseDownOffset
+    case model.mouseDownOffset of
+        Just _ ->
+            True
+
+        Nothing ->
+            False
 
 
 setValueIfNotDragging : Int -> Model -> Model
@@ -136,7 +139,7 @@ calculateOffset mouseY top model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    if Maybe.Extra.isJust model.mouseDownOffset then
+    if isDragging model then
         Sub.batch [ Mouse.moves makeDragAt, Mouse.ups makeDragEnd ]
     else
         Sub.none
@@ -191,7 +194,7 @@ percentCSS model =
 
 onMouseDown : Attribute Msg
 onMouseDown =
-    on "mousedown" (Json.map makeDragStart Mouse.position)
+    on "mousedown" (Decode.map makeDragStart Mouse.position)
 
 
 makeDragStart : Position -> Msg

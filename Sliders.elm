@@ -151,8 +151,10 @@ makeServerUpdate json =
             Result.Ok values ->
                 ServerUpdate values
 
-            Result.Err _ ->
+            Result.Err error ->
                 ServerUpdateError
+                    |> (,) (Debug.log "server update error" error)
+                    |> Tuple.second
 
 
 subscriptionItem : Int -> Slider.Model -> Sub Msg

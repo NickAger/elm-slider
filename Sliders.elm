@@ -55,8 +55,7 @@ initialModel =
 
 
 type Msg
-    = ServerUpdate (List Int)
-    | ServerUpdateError
+    = ServerUpdate (Result String (List Int))
     | SliderMsg Int Slider.Msg
 
 
@@ -66,7 +65,14 @@ update msg model =
         SliderMsg index sliderMsg ->
             updateSliderModel index sliderMsg model
 
-        ServerUpdate sliderValues ->
+        ServerUpdate sliderValuesResult ->
+            handleServerUpdate sliderValuesResult model
+
+
+handleServerUpdate : Result String (List Int) -> Model -> ( Model, Cmd Msg )
+handleServerUpdate sliderValuesResult model =
+    case sliderValuesResult of
+        Ok sliderValues ->
             let
                 sliders =
                     Array.toList model.sliders
@@ -77,8 +83,8 @@ update msg model =
             in
                 ( updatedModel, Cmd.none )
 
-        ServerUpdateError ->
-            -- nothing todo
+        -- ignore error and continue
+        Err _ ->
             ( model, Cmd.none )
 
 
@@ -149,12 +155,10 @@ makeServerUpdate json =
     in
         case decodeResult of
             Result.Ok values ->
-                ServerUpdate values
+                ServerUpdate (Ok values)
 
             Result.Err error ->
-                ServerUpdateError
-                    |> (,) (Debug.log "server update error" error)
-                    |> Tuple.second
+                ServerUpdate (Err (Debug.log "server update error" error))
 
 
 subscriptionItem : Int -> Slider.Model -> Sub Msg

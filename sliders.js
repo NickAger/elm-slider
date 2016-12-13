@@ -6637,7 +6637,7 @@ function mapProperty(func, property)
 	return on(
 		property.realKey,
 		property.value.options,
-		A2(_elm_lang$core$Json$map, func, property.value.decoder)
+		A2(_elm_lang$core$Json_Decode$map, func, property.value.decoder)
 	);
 }
 
@@ -8236,6 +8236,7 @@ return {
 };
 
 }();
+
 var _elm_lang$virtual_dom$Native_Debug = function() {
 
 
@@ -13530,10 +13531,10 @@ var _elm_lang$websocket$WebSocket$onSelfMsg = F3(
 	});
 _elm_lang$core$Native_Platform.effectManagers['WebSocket'] = {pkg: 'elm-lang/websocket', init: _elm_lang$websocket$WebSocket$init, onEffects: _elm_lang$websocket$WebSocket$onEffects, onSelfMsg: _elm_lang$websocket$WebSocket$onSelfMsg, tag: 'fx', cmdMap: _elm_lang$websocket$WebSocket$cmdMap, subMap: _elm_lang$websocket$WebSocket$subMap};
 
-var _user$project$Slider$defaultPosition = A2(_elm_lang$mouse$Mouse$Position, 10, 10);
-var _user$project$Slider$trackHeight = 363;
-var _user$project$Slider$trackWidth = 104;
-var _user$project$Slider$thumbCSS = {
+var _nickager$elm_slider$Slider$defaultPosition = A2(_elm_lang$mouse$Mouse$Position, 10, 10);
+var _nickager$elm_slider$Slider$trackHeight = 363;
+var _nickager$elm_slider$Slider$trackWidth = 104;
+var _nickager$elm_slider$Slider$thumbCSS = {
 	ctor: '::',
 	_0: {ctor: '_Tuple2', _0: 'left', _1: '24px'},
 	_1: {
@@ -13558,24 +13559,24 @@ var _user$project$Slider$thumbCSS = {
 		}
 	}
 };
-var _user$project$Slider$percentCSS = function (model) {
+var _nickager$elm_slider$Slider$percentCSS = function (model) {
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
 		_elm_lang$core$Basics$toString(model.percentValue),
 		'%');
 };
-var _user$project$Slider$px = function (number) {
+var _nickager$elm_slider$Slider$px = function (number) {
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
 		_elm_lang$core$Basics$toString(number),
 		'px');
 };
-var _user$project$Slider$trackCSS = {
+var _nickager$elm_slider$Slider$trackCSS = {
 	ctor: '::',
 	_0: {
 		ctor: '_Tuple2',
 		_0: 'width',
-		_1: _user$project$Slider$px(_user$project$Slider$trackWidth)
+		_1: _nickager$elm_slider$Slider$px(_nickager$elm_slider$Slider$trackWidth)
 	},
 	_1: {
 		ctor: '::',
@@ -13587,54 +13588,54 @@ var _user$project$Slider$trackCSS = {
 		}
 	}
 };
-var _user$project$Slider$positionCSS = function (position) {
+var _nickager$elm_slider$Slider$positionCSS = function (position) {
 	return {
 		ctor: '::',
 		_0: {
 			ctor: '_Tuple2',
 			_0: 'height',
-			_1: _user$project$Slider$px(_user$project$Slider$trackHeight)
+			_1: _nickager$elm_slider$Slider$px(_nickager$elm_slider$Slider$trackHeight)
 		},
 		_1: {
 			ctor: '::',
 			_0: {
 				ctor: '_Tuple2',
 				_0: 'top',
-				_1: _user$project$Slider$px(position.y)
+				_1: _nickager$elm_slider$Slider$px(position.y)
 			},
 			_1: {
 				ctor: '::',
 				_0: {
 					ctor: '_Tuple2',
 					_0: 'left',
-					_1: _user$project$Slider$px(position.x)
+					_1: _nickager$elm_slider$Slider$px(position.x)
 				},
 				_1: {ctor: '[]'}
 			}
 		}
 	};
 };
-var _user$project$Slider$calculateOffset = F3(
+var _nickager$elm_slider$Slider$calculateOffset = F3(
 	function (mouseY, top, model) {
 		var percent = _elm_lang$core$Basics$toFloat(model.percentValue);
-		var height = _elm_lang$core$Basics$toFloat(_user$project$Slider$trackHeight);
+		var height = _elm_lang$core$Basics$toFloat(_nickager$elm_slider$Slider$trackHeight);
 		var barY = _elm_lang$core$Basics$toFloat(top);
 		return _elm_lang$core$Basics$round(barY + ((100 - percent) * (height / 100))) - mouseY;
 	});
-var _user$project$Slider$barPercent = F3(
+var _nickager$elm_slider$Slider$barPercent = F3(
 	function (mouseY, top, model) {
-		var height = _elm_lang$core$Basics$toFloat(_user$project$Slider$trackHeight);
+		var height = _elm_lang$core$Basics$toFloat(_nickager$elm_slider$Slider$trackHeight);
 		var barY = _elm_lang$core$Basics$toFloat(top);
 		var offset = A2(_elm_lang$core$Maybe$withDefault, 0, model.mouseDownOffset);
 		var y = _elm_lang$core$Basics$toFloat(mouseY + offset);
 		var percent = _elm_lang$core$Basics$round(100 - ((y - barY) / (height / 100)));
 		return A3(_elm_lang$core$Basics$clamp, -2, 89, percent);
 	});
-var _user$project$Slider$getValue = function (model) {
+var _nickager$elm_slider$Slider$getValue = function (model) {
 	return _elm_lang$core$Basics$round(
 		_elm_lang$core$Basics$toFloat(model.percentValue) * 1.099) + 2;
 };
-var _user$project$Slider$isDragging = function (model) {
+var _nickager$elm_slider$Slider$isDragging = function (model) {
 	var _p0 = model.mouseDownOffset;
 	if (_p0.ctor === 'Just') {
 		return true;
@@ -13642,85 +13643,85 @@ var _user$project$Slider$isDragging = function (model) {
 		return false;
 	}
 };
-var _user$project$Slider$setValueIfNotDragging = F2(
+var _nickager$elm_slider$Slider$setValueIfNotDragging = F2(
 	function (newValue, model) {
 		var normalisedValue = _elm_lang$core$Basics$round(
 			_elm_lang$core$Basics$toFloat(newValue) * 0.91) - 2;
-		return _user$project$Slider$isDragging(model) ? model : _elm_lang$core$Native_Utils.update(
+		return _nickager$elm_slider$Slider$isDragging(model) ? model : _elm_lang$core$Native_Utils.update(
 			model,
 			{percentValue: normalisedValue});
 	});
-var _user$project$Slider$Model = F2(
+var _nickager$elm_slider$Slider$Model = F2(
 	function (a, b) {
 		return {percentValue: a, mouseDownOffset: b};
 	});
-var _user$project$Slider$initModel = function (percent) {
-	return A2(_user$project$Slider$Model, percent, _elm_lang$core$Maybe$Nothing);
+var _nickager$elm_slider$Slider$initModel = function (percent) {
+	return A2(_nickager$elm_slider$Slider$Model, percent, _elm_lang$core$Maybe$Nothing);
 };
-var _user$project$Slider$updateMain = F3(
+var _nickager$elm_slider$Slider$updateMain = F3(
 	function (msg, model, top) {
 		var _p1 = msg;
 		switch (_p1.ctor) {
 			case 'DragStart':
-				var offset = A3(_user$project$Slider$calculateOffset, _p1._0, top, model);
+				var offset = A3(_nickager$elm_slider$Slider$calculateOffset, _p1._0, top, model);
 				return A2(
-					_user$project$Slider$Model,
+					_nickager$elm_slider$Slider$Model,
 					model.percentValue,
 					_elm_lang$core$Maybe$Just(offset));
 			case 'DragAt':
 				return A2(
-					_user$project$Slider$Model,
-					A3(_user$project$Slider$barPercent, _p1._0, top, model),
+					_nickager$elm_slider$Slider$Model,
+					A3(_nickager$elm_slider$Slider$barPercent, _p1._0, top, model),
 					model.mouseDownOffset);
 			default:
-				return A2(_user$project$Slider$Model, model.percentValue, _elm_lang$core$Maybe$Nothing);
+				return A2(_nickager$elm_slider$Slider$Model, model.percentValue, _elm_lang$core$Maybe$Nothing);
 		}
 	});
-var _user$project$Slider$update = F2(
+var _nickager$elm_slider$Slider$update = F2(
 	function (msg, model) {
 		return {
 			ctor: '_Tuple2',
-			_0: A3(_user$project$Slider$updateMain, msg, model, _user$project$Slider$defaultPosition.y),
+			_0: A3(_nickager$elm_slider$Slider$updateMain, msg, model, _nickager$elm_slider$Slider$defaultPosition.y),
 			_1: _elm_lang$core$Platform_Cmd$none
 		};
 	});
-var _user$project$Slider$Properties = F2(
+var _nickager$elm_slider$Slider$Properties = F2(
 	function (a, b) {
 		return {topLeft: a, height: b};
 	});
-var _user$project$Slider$DragEnd = {ctor: 'DragEnd'};
-var _user$project$Slider$makeDragEnd = function (_p2) {
-	return _user$project$Slider$DragEnd;
+var _nickager$elm_slider$Slider$DragEnd = {ctor: 'DragEnd'};
+var _nickager$elm_slider$Slider$makeDragEnd = function (_p2) {
+	return _nickager$elm_slider$Slider$DragEnd;
 };
-var _user$project$Slider$DragAt = function (a) {
+var _nickager$elm_slider$Slider$DragAt = function (a) {
 	return {ctor: 'DragAt', _0: a};
 };
-var _user$project$Slider$makeDragAt = function (xy) {
-	return _user$project$Slider$DragAt(xy.y);
+var _nickager$elm_slider$Slider$makeDragAt = function (xy) {
+	return _nickager$elm_slider$Slider$DragAt(xy.y);
 };
-var _user$project$Slider$subscriptions = function (model) {
-	return _user$project$Slider$isDragging(model) ? _elm_lang$core$Platform_Sub$batch(
+var _nickager$elm_slider$Slider$subscriptions = function (model) {
+	return _nickager$elm_slider$Slider$isDragging(model) ? _elm_lang$core$Platform_Sub$batch(
 		{
 			ctor: '::',
-			_0: _elm_lang$mouse$Mouse$moves(_user$project$Slider$makeDragAt),
+			_0: _elm_lang$mouse$Mouse$moves(_nickager$elm_slider$Slider$makeDragAt),
 			_1: {
 				ctor: '::',
-				_0: _elm_lang$mouse$Mouse$ups(_user$project$Slider$makeDragEnd),
+				_0: _elm_lang$mouse$Mouse$ups(_nickager$elm_slider$Slider$makeDragEnd),
 				_1: {ctor: '[]'}
 			}
 		}) : _elm_lang$core$Platform_Sub$none;
 };
-var _user$project$Slider$DragStart = function (a) {
+var _nickager$elm_slider$Slider$DragStart = function (a) {
 	return {ctor: 'DragStart', _0: a};
 };
-var _user$project$Slider$makeDragStart = function (position) {
-	return _user$project$Slider$DragStart(position.y);
+var _nickager$elm_slider$Slider$makeDragStart = function (position) {
+	return _nickager$elm_slider$Slider$DragStart(position.y);
 };
-var _user$project$Slider$onMouseDown = A2(
+var _nickager$elm_slider$Slider$onMouseDown = A2(
 	_elm_lang$html$Html_Events$on,
 	'mousedown',
-	A2(_elm_lang$core$Json_Decode$map, _user$project$Slider$makeDragStart, _elm_lang$mouse$Mouse$position));
-var _user$project$Slider$renderSlider = F2(
+	A2(_elm_lang$core$Json_Decode$map, _nickager$elm_slider$Slider$makeDragStart, _elm_lang$mouse$Mouse$position));
+var _nickager$elm_slider$Slider$renderSlider = F2(
 	function (position, model) {
 		return A2(
 			_elm_lang$html$Html$div,
@@ -13729,8 +13730,8 @@ var _user$project$Slider$renderSlider = F2(
 				_0: _elm_lang$html$Html_Attributes$style(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						_user$project$Slider$positionCSS(position),
-						_user$project$Slider$trackCSS)),
+						_nickager$elm_slider$Slider$positionCSS(position),
+						_nickager$elm_slider$Slider$trackCSS)),
 				_1: {ctor: '[]'}
 			},
 			{
@@ -13739,7 +13740,7 @@ var _user$project$Slider$renderSlider = F2(
 					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _user$project$Slider$onMouseDown,
+						_0: _nickager$elm_slider$Slider$onMouseDown,
 						_1: {
 							ctor: '::',
 							_0: _elm_lang$html$Html_Attributes$style(
@@ -13748,9 +13749,9 @@ var _user$project$Slider$renderSlider = F2(
 									_0: {
 										ctor: '_Tuple2',
 										_0: 'bottom',
-										_1: _user$project$Slider$percentCSS(model)
+										_1: _nickager$elm_slider$Slider$percentCSS(model)
 									},
-									_1: _user$project$Slider$thumbCSS
+									_1: _nickager$elm_slider$Slider$thumbCSS
 								}),
 							_1: {ctor: '[]'}
 						}
@@ -13759,23 +13760,23 @@ var _user$project$Slider$renderSlider = F2(
 				_1: {ctor: '[]'}
 			});
 	});
-var _user$project$Slider$view = _user$project$Slider$renderSlider(_user$project$Slider$defaultPosition);
-var _user$project$Slider$main = _elm_lang$html$Html$program(
+var _nickager$elm_slider$Slider$view = _nickager$elm_slider$Slider$renderSlider(_nickager$elm_slider$Slider$defaultPosition);
+var _nickager$elm_slider$Slider$main = _elm_lang$html$Html$program(
 	{
 		init: {
 			ctor: '_Tuple2',
-			_0: _user$project$Slider$initModel(50),
+			_0: _nickager$elm_slider$Slider$initModel(50),
 			_1: _elm_lang$core$Platform_Cmd$none
 		},
-		view: _user$project$Slider$view,
-		update: _user$project$Slider$update,
-		subscriptions: _user$project$Slider$subscriptions
+		view: _nickager$elm_slider$Slider$view,
+		update: _nickager$elm_slider$Slider$update,
+		subscriptions: _nickager$elm_slider$Slider$subscriptions
 	})();
 
-var _user$project$Sliders$websocketAddress = 'ws://localhost:8080';
-var _user$project$Sliders$startX = 10;
-var _user$project$Sliders$topY = 10;
-var _user$project$Sliders$slidersJson = function (sliderValues) {
+var _nickager$elm_slider$Sliders$websocketAddress = 'ws://localhost:8080';
+var _nickager$elm_slider$Sliders$startX = 10;
+var _nickager$elm_slider$Sliders$topY = 10;
+var _nickager$elm_slider$Sliders$slidersJson = function (sliderValues) {
 	return _elm_lang$core$Json_Encode$object(
 		{
 			ctor: '::',
@@ -13796,13 +13797,13 @@ var _user$project$Sliders$slidersJson = function (sliderValues) {
 			}
 		});
 };
-var _user$project$Sliders$slidersJsonString = function (sliderValues) {
+var _nickager$elm_slider$Sliders$slidersJsonString = function (sliderValues) {
 	return A2(
 		_elm_lang$core$Json_Encode$encode,
 		0,
-		_user$project$Sliders$slidersJson(sliderValues));
+		_nickager$elm_slider$Sliders$slidersJson(sliderValues));
 };
-var _user$project$Sliders$updateSliderModel = F3(
+var _nickager$elm_slider$Sliders$updateSliderModel = F3(
 	function (index, sliderMsg, model) {
 		var updatedModel = A2(
 			_elm_lang$core$Maybe$withDefault,
@@ -13819,83 +13820,88 @@ var _user$project$Sliders$updateSliderModel = F3(
 				A2(
 					_elm_lang$core$Maybe$map,
 					function (sliderModel) {
-						return A3(_user$project$Slider$updateMain, sliderMsg, sliderModel, _user$project$Sliders$topY);
+						return A3(_nickager$elm_slider$Slider$updateMain, sliderMsg, sliderModel, _nickager$elm_slider$Sliders$topY);
 					},
 					A2(_elm_lang$core$Array$get, index, model.sliders))));
-		var json = _user$project$Sliders$slidersJsonString(
+		var json = _nickager$elm_slider$Sliders$slidersJsonString(
 			_elm_lang$core$Array$toList(
-				A2(_elm_lang$core$Array$map, _user$project$Slider$getValue, updatedModel.sliders)));
+				A2(_elm_lang$core$Array$map, _nickager$elm_slider$Slider$getValue, updatedModel.sliders)));
 		return {
 			ctor: '_Tuple2',
 			_0: updatedModel,
-			_1: A2(_elm_lang$websocket$WebSocket$send, _user$project$Sliders$websocketAddress, json)
+			_1: A2(_elm_lang$websocket$WebSocket$send, _nickager$elm_slider$Sliders$websocketAddress, json)
 		};
 	});
-var _user$project$Sliders$update = F2(
-	function (msg, model) {
-		var _p0 = msg;
-		switch (_p0.ctor) {
-			case 'SliderMsg':
-				return A3(_user$project$Sliders$updateSliderModel, _p0._0, _p0._1, model);
-			case 'ServerUpdate':
-				var sliders = A3(
-					_elm_lang$core$List$map2,
-					_user$project$Slider$setValueIfNotDragging,
-					_p0._0,
-					_elm_lang$core$Array$toList(model.sliders));
-				var updatedModel = _elm_lang$core$Native_Utils.update(
-					model,
-					{
-						sliders: _elm_lang$core$Array$fromList(sliders)
-					});
-				return {ctor: '_Tuple2', _0: updatedModel, _1: _elm_lang$core$Platform_Cmd$none};
-			default:
-				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+var _nickager$elm_slider$Sliders$handleServerUpdate = F2(
+	function (sliderValuesResult, model) {
+		var _p0 = sliderValuesResult;
+		if (_p0.ctor === 'Ok') {
+			var sliders = A3(
+				_elm_lang$core$List$map2,
+				_nickager$elm_slider$Slider$setValueIfNotDragging,
+				_p0._0,
+				_elm_lang$core$Array$toList(model.sliders));
+			var updatedModel = _elm_lang$core$Native_Utils.update(
+				model,
+				{
+					sliders: _elm_lang$core$Array$fromList(sliders)
+				});
+			return {ctor: '_Tuple2', _0: updatedModel, _1: _elm_lang$core$Platform_Cmd$none};
+		} else {
+			return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 		}
 	});
-var _user$project$Sliders$numberSliders = 10;
-var _user$project$Sliders$Model = function (a) {
+var _nickager$elm_slider$Sliders$update = F2(
+	function (msg, model) {
+		var _p1 = msg;
+		if (_p1.ctor === 'SliderMsg') {
+			return A3(_nickager$elm_slider$Sliders$updateSliderModel, _p1._0, _p1._1, model);
+		} else {
+			return A2(_nickager$elm_slider$Sliders$handleServerUpdate, _p1._0, model);
+		}
+	});
+var _nickager$elm_slider$Sliders$numberSliders = 10;
+var _nickager$elm_slider$Sliders$Model = function (a) {
 	return {sliders: a};
 };
-var _user$project$Sliders$initialModel = function () {
+var _nickager$elm_slider$Sliders$initialModel = function () {
 	var sliderModels = A2(
 		_elm_lang$core$Array$repeat,
-		_user$project$Sliders$numberSliders,
-		_user$project$Slider$initModel(50));
-	return _user$project$Sliders$Model(sliderModels);
+		_nickager$elm_slider$Sliders$numberSliders,
+		_nickager$elm_slider$Slider$initModel(50));
+	return _nickager$elm_slider$Sliders$Model(sliderModels);
 }();
-var _user$project$Sliders$init = {ctor: '_Tuple2', _0: _user$project$Sliders$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
-var _user$project$Sliders$SliderMsg = F2(
+var _nickager$elm_slider$Sliders$init = {ctor: '_Tuple2', _0: _nickager$elm_slider$Sliders$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
+var _nickager$elm_slider$Sliders$SliderMsg = F2(
 	function (a, b) {
 		return {ctor: 'SliderMsg', _0: a, _1: b};
 	});
-var _user$project$Sliders$sliderView = F2(
+var _nickager$elm_slider$Sliders$sliderView = F2(
 	function (index, aSliderModel) {
-		var position = A2(_elm_lang$mouse$Mouse$Position, _user$project$Sliders$startX + (_user$project$Slider$trackWidth * index), _user$project$Sliders$topY);
+		var position = A2(_elm_lang$mouse$Mouse$Position, _nickager$elm_slider$Sliders$startX + (_nickager$elm_slider$Slider$trackWidth * index), _nickager$elm_slider$Sliders$topY);
 		return A2(
 			_elm_lang$html$Html$map,
-			_user$project$Sliders$SliderMsg(index),
-			A2(_user$project$Slider$renderSlider, position, aSliderModel));
+			_nickager$elm_slider$Sliders$SliderMsg(index),
+			A2(_nickager$elm_slider$Slider$renderSlider, position, aSliderModel));
 	});
-var _user$project$Sliders$view = function (model) {
-	var sliders = A2(_elm_lang$core$Array$indexedMap, _user$project$Sliders$sliderView, model.sliders);
+var _nickager$elm_slider$Sliders$view = function (model) {
+	var sliders = A2(_elm_lang$core$Array$indexedMap, _nickager$elm_slider$Sliders$sliderView, model.sliders);
 	return A2(
 		_elm_lang$html$Html$div,
 		{ctor: '[]'},
 		_elm_lang$core$Array$toList(sliders));
 };
-var _user$project$Sliders$subscriptionItem = F2(
+var _nickager$elm_slider$Sliders$subscriptionItem = F2(
 	function (index, aSliderModel) {
 		return A2(
 			_elm_lang$core$Platform_Sub$map,
-			_user$project$Sliders$SliderMsg(index),
-			_user$project$Slider$subscriptions(aSliderModel));
+			_nickager$elm_slider$Sliders$SliderMsg(index),
+			_nickager$elm_slider$Slider$subscriptions(aSliderModel));
 	});
-var _user$project$Sliders$ServerUpdateError = {ctor: 'ServerUpdateError'};
-var _user$project$Sliders$ServerUpdate = function (a) {
+var _nickager$elm_slider$Sliders$ServerUpdate = function (a) {
 	return {ctor: 'ServerUpdate', _0: a};
 };
-var _user$project$Sliders$makeServerUpdate = function (json) {
+var _nickager$elm_slider$Sliders$makeServerUpdate = function (json) {
 	var decodeResult = A2(
 		_elm_lang$core$Json_Decode$decodeString,
 		A2(
@@ -13903,27 +13909,30 @@ var _user$project$Sliders$makeServerUpdate = function (json) {
 			'sliders',
 			_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$int)),
 		json);
-	var _p1 = decodeResult;
-	if (_p1.ctor === 'Ok') {
-		return _user$project$Sliders$ServerUpdate(_p1._0);
+	var _p2 = decodeResult;
+	if (_p2.ctor === 'Ok') {
+		return _nickager$elm_slider$Sliders$ServerUpdate(
+			_elm_lang$core$Result$Ok(_p2._0));
 	} else {
-		return _user$project$Sliders$ServerUpdateError;
+		return _nickager$elm_slider$Sliders$ServerUpdate(
+			_elm_lang$core$Result$Err(
+				A2(_elm_lang$core$Debug$log, 'server update error', _p2._0)));
 	}
 };
-var _user$project$Sliders$subscriptions = function (model) {
-	var serverUpdate = A2(_elm_lang$websocket$WebSocket$listen, _user$project$Sliders$websocketAddress, _user$project$Sliders$makeServerUpdate);
-	var subscriptions = A2(_elm_lang$core$Array$indexedMap, _user$project$Sliders$subscriptionItem, model.sliders);
+var _nickager$elm_slider$Sliders$subscriptions = function (model) {
+	var serverUpdate = A2(_elm_lang$websocket$WebSocket$listen, _nickager$elm_slider$Sliders$websocketAddress, _nickager$elm_slider$Sliders$makeServerUpdate);
+	var subscriptions = A2(_elm_lang$core$Array$indexedMap, _nickager$elm_slider$Sliders$subscriptionItem, model.sliders);
 	var subscriptionsList = _elm_lang$core$Array$toList(subscriptions);
 	return _elm_lang$core$Platform_Sub$batch(
 		{ctor: '::', _0: serverUpdate, _1: subscriptionsList});
 };
-var _user$project$Sliders$main = _elm_lang$html$Html$program(
-	{init: _user$project$Sliders$init, view: _user$project$Sliders$view, update: _user$project$Sliders$update, subscriptions: _user$project$Sliders$subscriptions})();
+var _nickager$elm_slider$Sliders$main = _elm_lang$html$Html$program(
+	{init: _nickager$elm_slider$Sliders$init, view: _nickager$elm_slider$Sliders$view, update: _nickager$elm_slider$Sliders$update, subscriptions: _nickager$elm_slider$Sliders$subscriptions})();
 
 var Elm = {};
 Elm['Sliders'] = Elm['Sliders'] || {};
-if (typeof _user$project$Sliders$main !== 'undefined') {
-    _user$project$Sliders$main(Elm['Sliders'], 'Sliders', {"types":{"unions":{"Slider.Msg":{"args":[],"tags":{"DragEnd":[],"DragAt":["Int"],"DragStart":["Int"]}},"Sliders.Msg":{"args":[],"tags":{"ServerUpdate":["List Int"],"ServerUpdateError":[],"SliderMsg":["Int","Slider.Msg"]}}},"aliases":{},"message":"Sliders.Msg"},"versions":{"elm":"0.18.0"}});
+if (typeof _nickager$elm_slider$Sliders$main !== 'undefined') {
+    _nickager$elm_slider$Sliders$main(Elm['Sliders'], 'Sliders', {"types":{"unions":{"Slider.Msg":{"args":[],"tags":{"DragEnd":[],"DragAt":["Int"],"DragStart":["Int"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Sliders.Msg":{"args":[],"tags":{"ServerUpdate":["Result.Result String (List Int)"],"SliderMsg":["Int","Slider.Msg"]}}},"aliases":{},"message":"Sliders.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

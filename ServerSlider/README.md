@@ -37,3 +37,11 @@ $ git clone https://github.com/Zewo/HTTPServer.git
 $ cd HTTPServer
 $ swift package generate-xcodeproj
 ```
+
+## Update
+From [hacker news](https://news.ycombinator.com/item?id=14972637):
+
+> here is some really awesome competition going between Vapor (I think still the most popular Swift web framework) and IBM's Kitura web app framework
+
+* https://github.com/IBM-Swift/Kitura
+* https://github.com/vapor/vapor
